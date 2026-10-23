@@ -1,19 +1,22 @@
-src/agent.ts 119ms
-src/db.ts 13ms
-src/demo.ts 7ms
-src/extraction.ts 26ms
-src/provider.ts 9ms
-src/schema.ts 2ms
-tests/crm.test.ts 33ms
-scripts/scan.mjs 34ms
-package-lock.json 10ms (unchanged)
+src/agent.ts 109ms (unchanged)
+src/db.ts 15ms (unchanged)
+src/demo.ts 10ms (unchanged)
+src/extraction.ts 27ms (unchanged)
+src/provider.ts 8ms (unchanged)
+src/schema.ts 2ms (unchanged)
+tests/crm.test.ts 31ms (unchanged)
+scripts/scan.mjs 28ms (unchanged)
+package-lock.json 9ms (unchanged)
 package.json 1ms (unchanged)
-tsconfig.json 1ms
-docker-compose.yml 23ms (unchanged)
-.github/workflows/ci.yml 6ms
-PROGRESS.md 22ms (unchanged)
-README.md 8ms
-docs/ASSUMPTIONS.md 5ms (unchanged)
-docs/BLOCKERS.md 5ms (unchanged)
-docs/demo-output.md 2ms (unchanged)
-docs/PLAN.md 6ms
+tsconfig.json 1ms (unchanged)
+docker-compose.yml 16ms (unchanged)
+.github/workflows/ci.yml 6ms (unchanged)
+PROGRESS.md 20ms (unchanged)
+README.md 18ms (unchanged)
+REPORT.md 7ms (unchanged)
+docs/ASSUMPTIONS.md 4ms (unchanged)
+docs/BLOCKERS.md 7ms (unchanged)
+docs/demo-output.md 1ms (unchanged)
+docs/PLAN.md 6ms (unchanged)
+docs/PUBLISHING.md 3ms (unchanged)
+docs/TEST-REPORT.md 5ms

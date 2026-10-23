@@ -3,6 +3,7 @@ import type { Database } from "./db.js";
 import {
   chunks,
   validateExtraction,
+  parseChunk,
   type Provider,
   type Context,
   type Extraction,
@@ -103,7 +104,11 @@ export class CRMCallAgent {
         call.transcript,
         context,
       );
-      extraction.candidates.push(...part.candidates);
+      // Preserve detectable source conflicts even if a model omits a candidate.
+      extraction.candidates.push(
+        ...part.candidates,
+        ...parseChunk(chunk, context).candidates,
+      );
       extraction.contacts.push(...part.contacts);
       extraction.flags.push(...part.flags);
     }

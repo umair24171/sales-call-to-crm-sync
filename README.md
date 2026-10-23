@@ -35,7 +35,7 @@ Supplemental cloud commands: `TEST_PGLITE=1 npm test` and `TEST_PGLITE=1 npm run
 
 ## Measured results
 
-29 tests passed, zero failed or skipped. TypeScript check passed. A 4,000-line synthetic transcript was processed through its final chunk, with distant budget conflicts preserved. Long single-utterance overlap initially created a false conflict; merging fragments by their source statement location fixed it while retaining separate conflicting statements. Raw results and real demo output are in docs/test-output.txt and docs/demo-output.md. Native PostgreSQL CI and clean-clone Docker verification remain pending.
+30 tests passed, zero failed or skipped. TypeScript check passed. A 4,000-line synthetic transcript was processed through its final chunk, with distant budget conflicts preserved. Long single-utterance overlap initially created a false conflict; merging fragments by their source statement location fixed it while retaining separate conflicting statements. Raw results and real demo output are in docs/test-output.txt and docs/demo-output.md. Native PostgreSQL CI and clean-clone Docker verification remain pending.
 
 ## Tradeoffs and limits
 

@@ -3,40 +3,41 @@ npm warn Unknown env config "http-proxy". This will stop working in the next maj
 > buildzn-sales-call-to-crm-sync@0.1.0 test
 > node --import tsx --test --test-concurrency=1 tests/*.test.ts
 
-✔ 01 multi-speaker evidence and two same-company contacts retained (955.312643ms)
-✔ 02 conflicting budgets and dates withheld with flags (14.236285ms)
-✔ 02 conflicting next steps do not write detached dates (12.036475ms)
-✔ 03 missing fields preserve CRM values; no next step flagged (20.025021ms)
-✔ 04 next week anchored in timezone with review flag (11.161254ms)
-✔ 05 transcript number error not invented (13.544371ms)
-✔ 05 unsupported currency withheld (12.345101ms)
-✔ 05 extra precision cannot silently round a transcript budget (15.713719ms)
-✔ 06 mixed Urdu English grounded fields (12.942212ms)
-✔ 07 duplicate call ID and duplicate content under another ID reuse checkpoint (16.345979ms)
-✔ 07 reused call ID with changed transcript rejected (12.012388ms)
-✔ 08 CRM contradiction shown as exact before and after, never auto-written (12.605985ms)
-✔ 09 long transcript processed through final chunk and cross-chunk conflict retained (28.607464ms)
-✔ 09 long single utterance chunk retains final next step (10.848091ms)
-✔ 10 no write without approval; dry run never writes (18.812251ms)
-✔ 10 forged displayed hash rejected (14.355686ms)
-✔ 10 CRM version drift rejects approval and application (19.277422ms)
-✔ 10 altered diff after approval cannot write (16.079057ms)
-✔ 11 concurrent applies and retries produce one audit and one version increment (27.187541ms)
-✔ 11 precommit failure rolls back write and audit then resumes (21.857005ms)
-✔ 12 injected authorization text never grants approval (11.462269ms)
-✔ 12 ungrounded or arbitrary model fields rejected {"candidates":[{"field":"admin","value":true,"speaker":"Amina","quote":"budget is $10,000 USD."}],"contacts":[],"flags":[]} (8.794923ms)
-✔ 12 ungrounded or arbitrary model fields rejected {"candidates":[{"field":"budgetMinor","value":9000000,"speaker":"Amina","quote":"budget is $10,000 USD. close date: 2026-02-15."}],"contacts":[],"flags":[]} (11.053071ms)
-✔ 12 ungrounded or arbitrary model fields rejected {"candidates":[],"contacts":["Invented Person"],"flags":[]} (9.391594ms)
-✔ 12 fabricated speaker attribution rejected (7.853652ms)
-✔ 13 provider timeout creates no writable proposal (9.101947ms)
-✔ 13 invalid dates timezone and empty or oversized transcript rejected (4.66537ms)
-✔ unit chunking retains source tail and valid exact dates (4.010452ms)
-✔ 02 conflicts inside a single utterance stay separate (9.60808ms)
-ℹ tests 29
+✔ 01 multi-speaker evidence and two same-company contacts retained (997.174272ms)
+✔ 02 conflicting budgets and dates withheld with flags (17.798609ms)
+✔ 02 conflicting next steps do not write detached dates (12.263527ms)
+✔ 03 missing fields preserve CRM values; no next step flagged (17.915877ms)
+✔ 04 next week anchored in timezone with review flag (14.054049ms)
+✔ 05 transcript number error not invented (11.179059ms)
+✔ 05 unsupported currency withheld (11.136731ms)
+✔ 05 extra precision cannot silently round a transcript budget (9.716283ms)
+✔ 06 mixed Urdu English grounded fields (12.416728ms)
+✔ 07 duplicate call ID and duplicate content under another ID reuse checkpoint (15.654924ms)
+✔ 07 reused call ID with changed transcript rejected (10.459534ms)
+✔ 08 CRM contradiction shown as exact before and after, never auto-written (13.443588ms)
+✔ 09 long transcript processed through final chunk and cross-chunk conflict retained (34.023725ms)
+✔ 09 long single utterance chunk retains final next step (12.854308ms)
+✔ 10 no write without approval; dry run never writes (18.959952ms)
+✔ 10 forged displayed hash rejected (11.965006ms)
+✔ 10 CRM version drift rejects approval and application (19.824857ms)
+✔ 10 altered diff after approval cannot write (16.258766ms)
+✔ 11 concurrent applies and retries produce one audit and one version increment (25.787707ms)
+✔ 11 precommit failure rolls back write and audit then resumes (21.247034ms)
+✔ 12 injected authorization text never grants approval (13.343587ms)
+✔ 12 ungrounded or arbitrary model fields rejected {"candidates":[{"field":"admin","value":true,"speaker":"Amina","quote":"budget is $10,000 USD."}],"contacts":[],"flags":[]} (9.613098ms)
+✔ 12 ungrounded or arbitrary model fields rejected {"candidates":[{"field":"budgetMinor","value":9000000,"speaker":"Amina","quote":"budget is $10,000 USD. close date: 2026-02-15."}],"contacts":[],"flags":[]} (8.631817ms)
+✔ 12 ungrounded or arbitrary model fields rejected {"candidates":[],"contacts":["Invented Person"],"flags":[]} (9.591334ms)
+✔ 12 fabricated speaker attribution rejected (7.416693ms)
+✔ 13 provider timeout creates no writable proposal (8.993042ms)
+✔ 13 invalid dates timezone and empty or oversized transcript rejected (7.213677ms)
+✔ unit chunking retains source tail and valid exact dates (4.307791ms)
+✔ 02 conflicts inside a single utterance stay separate (9.657344ms)
+✔ 02 detectable source conflict survives model omission (9.44958ms)
+ℹ tests 30
 ℹ suites 0
-ℹ pass 29
+ℹ pass 30
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 1747.188757
+ℹ duration_ms 1763.049397

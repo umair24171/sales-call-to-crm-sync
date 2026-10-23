@@ -319,3 +319,23 @@ test("02 conflicts inside a single utterance stay separate", async () => {
   assert.equal(p.diff.budgetMinor, undefined);
   assert.ok(p.extraction.flags.includes("conflict:budgetMinor"));
 });
+test("02 detectable source conflict survives model omission", async () => {
+  const provider = new MockProvider();
+  a = new CRMCallAgent(db, {
+    extract: async (chunk, c) => {
+      const e = await provider.extract(chunk, c);
+      return {
+        ...e,
+        candidates: e.candidates.filter(
+          (x) => x.field !== "budgetMinor" || x.value === 1000000,
+        ),
+      };
+    },
+    followup: provider.followup,
+  });
+  const p = await propose(
+    "Amina (SyntheticCo): budget is $10,000 USD.\nBilal (SyntheticCo): budget is $20,000 USD.",
+  );
+  assert.equal(p.diff.budgetMinor, undefined);
+  assert.ok(p.extraction.flags.includes("conflict:budgetMinor"));
+});

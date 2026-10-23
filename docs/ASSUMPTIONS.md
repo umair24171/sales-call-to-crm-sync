@@ -9,3 +9,5 @@ Next week means Monday of the next calendar week in the call's IANA timezone, fl
 Transcript limit is one million UTF-16 code units. Chunking uses 4000-character fragments with overlap for unusually long utterances, keeps speaker labels, and merges all candidates globally. Quotes and flags are retained for review. Natural-language understanding remains limited and conservative. No paid calls.
 
 Remote creation/auth, native PostgreSQL and Docker checks remain blocked. Owner/site verified as umair24171 and umair24171/dev_umair. No deployment.
+
+Source code is provided under the MIT license. Public repository names and topics are proposed until GitHub creation succeeds.

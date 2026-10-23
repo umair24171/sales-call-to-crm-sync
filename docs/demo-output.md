@@ -1,6 +1,6 @@
 # Recorded demo output
 
-All data synthetic. Actual command: `TEST_PGLITE=1 npm run demo`. Embedded PostgreSQL, not Docker.
+All data synthetic. Actual command: `TEST_PGLITE=1 npm run demo`. Embedded PostgreSQL. Native Docker demo remains unverified.
 
 ```text
 npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
