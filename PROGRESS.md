@@ -6,6 +6,6 @@ Measured: 30 distinct tests. Native 30 passed/0 environment-specific skipped; em
 
 Running: no background worker intentionally left running.
 
-Next: include the verified project in the BuildZn portfolio PR after all four projects pass their gates. No deployment or merge. Keep production/model limitations explicit.
+Portfolio entry: https://github.com/umair24171/dev_umair/pull/24, open and unmerged. The PR description tracks website-specific validation. All four agent project gates passed before the portfolio changes began. Next: user review; do not merge or deploy. Keep production/model limitations explicit.
 
 Original host-only limitations were resolved using scoped GitHub access and hosted Actions, with no new credential or paid service. Original local checkpoint hashes are preserved in remote commit messages.
