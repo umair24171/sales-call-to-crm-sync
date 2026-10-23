@@ -1,1 +1,47 @@
-import {connect} from './db.js';import {migrate} from './schema.js';import {CRMCallAgent} from './agent.js';import {MockProvider} from './extraction.js';const db=await connect();try{await migrate(db);await db.query('INSERT INTO deals(id,company,fields) VALUES($1,$2,$3) ON CONFLICT DO NOTHING',['synthetic-deal','SyntheticCo',JSON.stringify({budgetMinor:500000,contacts:[]})]);const a=new CRMCallAgent(db,new MockProvider());const id=await a.ingest({id:'synthetic-call',deal:'synthetic-deal',occurredAt:'2026-01-23T23:30:00Z',timezone:'Asia/Karachi',transcript:'Amina (SyntheticCo): budget is $10,000 USD.\nBilal (SyntheticCo): next step: send proposal next week.'});const p=await a.propose(id);console.log('All data synthetic. No external CRM writes or messages.');console.log('Review diff:',JSON.stringify(p.diff,null,2));console.log('Flags:',p.extraction.flags);console.log('Follow-up draft:',p.followup);if(!p.applied){console.log('Before approval CRM version:',(await db.query('SELECT version FROM deals WHERE id=$1',['synthetic-deal']))[0]!.version);await a.approve(id,'synthetic-demo-reviewer',p.diff_hash);console.log('Dry run:',await a.apply(id));}console.log('Explicitly approved apply:',await a.apply(id,false));console.log('Retry:',await a.apply(id,false));console.log('Audit records:',(await db.query('SELECT * FROM audit')).length);}finally{await db.close();}
+import { connect } from "./db.js";
+import { migrate } from "./schema.js";
+import { CRMCallAgent } from "./agent.js";
+import { MockProvider } from "./extraction.js";
+const db = await connect();
+try {
+  await migrate(db);
+  await db.query(
+    "INSERT INTO deals(id,company,fields) VALUES($1,$2,$3) ON CONFLICT DO NOTHING",
+    [
+      "synthetic-deal",
+      "SyntheticCo",
+      JSON.stringify({ budgetMinor: 500000, contacts: [] }),
+    ],
+  );
+  const a = new CRMCallAgent(db, new MockProvider());
+  const id = await a.ingest({
+    id: "synthetic-call",
+    deal: "synthetic-deal",
+    occurredAt: "2026-01-23T23:30:00Z",
+    timezone: "Asia/Karachi",
+    transcript:
+      "Amina (SyntheticCo): budget is $10,000 USD.\nBilal (SyntheticCo): next step: send proposal next week.",
+  });
+  const p = await a.propose(id);
+  console.log("All data synthetic. No external CRM writes or messages.");
+  console.log("Review diff:", JSON.stringify(p.diff, null, 2));
+  console.log("Flags:", p.extraction.flags);
+  console.log("Follow-up draft:", p.followup);
+  if (!p.applied) {
+    console.log(
+      "Before approval CRM version:",
+      (
+        await db.query("SELECT version FROM deals WHERE id=$1", [
+          "synthetic-deal",
+        ])
+      )[0]!.version,
+    );
+    await a.approve(id, "synthetic-demo-reviewer", p.diff_hash);
+    console.log("Dry run:", await a.apply(id));
+  }
+  console.log("Explicitly approved apply:", await a.apply(id, false));
+  console.log("Retry:", await a.apply(id, false));
+  console.log("Audit records:", (await db.query("SELECT * FROM audit")).length);
+} finally {
+  await db.close();
+}

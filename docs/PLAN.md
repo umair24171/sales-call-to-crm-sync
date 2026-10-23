@@ -1,15 +1,19 @@
 # Sales call to CRM sync plan
 
 ## Scope
+
 Parse synthetic multi-speaker transcripts into grounded candidate CRM fields, surface conflicts and missing next steps, generate a follow-up draft, show every proposed write as a before/after diff, and require approval bound to the exact diff and CRM version before atomic application. No external CRM or messaging.
 
 ## Data model
+
 CRM deals with JSON fields and optimistic version. Immutable calls with normalized transcript fingerprint and trusted deal mapping. Proposals with extraction evidence, flags, before/after diff, base version, diff hash and approval state. Applied-write audit keyed by proposal; duplicate ingestion reuses call/proposal.
 
 ## Tools
+
 TypeScript CLI, PostgreSQL, Claude extraction provider and deterministic mock, chunked transcript processing with bounded overlap, date anchoring in call timezone, Node unit/integration/adversarial tests, Docker Compose and GitHub Actions PostgreSQL.
 
 ## Edge cases mapped to named tests
+
 1. Several speakers keep quote provenance; two customer contacts from the same company are retained.
 2. Conflicting budget or dates are flagged and not silently selected.
 3. Missing fields preserve existing CRM values; absent next step is flagged.
