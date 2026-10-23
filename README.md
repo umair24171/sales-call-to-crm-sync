@@ -1,4 +1,4 @@
-# Work in progress: Sales call to CRM sync
+# Sales call to CRM sync
 
 Synthetic BuildZn portfolio project. Call transcripts become grounded candidate fields, conflict flags, a follow-up draft and an exact CRM diff. Applying the diff requires explicit operator approval of its hash and base CRM version. No external CRM or messages.
 
@@ -17,7 +17,7 @@ flowchart TD
 Node 24 and Docker Compose:
 
 ```sh
-git clone <repository-url>
+git clone https://github.com/umair24171/sales-call-to-crm-sync.git
 cd sales-call-to-crm-sync
 docker compose up -d db
 npm ci
@@ -35,7 +35,7 @@ Supplemental cloud commands: `TEST_PGLITE=1 npm test` and `TEST_PGLITE=1 npm run
 
 ## Measured results
 
-30 tests passed, zero failed or skipped. TypeScript check passed. A 4,000-line synthetic transcript was processed through its final chunk, with distant budget conflicts preserved. Long single-utterance overlap initially created a false conflict; merging fragments by their source statement location fixed it while retaining separate conflicting statements. Raw results and real demo output are in docs/test-output.txt and docs/demo-output.md. Native PostgreSQL CI and clean-clone Docker verification remain pending.
+30 tests passed, zero failed or skipped. TypeScript check passed. A 4,000-line synthetic transcript was processed through its final chunk, with distant budget conflicts preserved. Long single-utterance overlap initially created a false conflict; merging fragments by their source statement location fixed it while retaining separate conflicting statements. Raw results and real demo output are in docs/test-output.txt and docs/demo-output.md. Native PostgreSQL and the clean-checkout Docker demo passed in the linked Actions run.
 
 ## Tradeoffs and limits
 
@@ -44,3 +44,7 @@ Evidence must occur verbatim in the source and pass field-specific lexical groun
 CRM is a PostgreSQL-backed mock. The trusted caller supplies the target deal and reviewer identity; a public auth or external CRM integration is not included. Approved diffs use canonical hashes, optimistic versions and transactionally recorded audit entries. Stale proposals are rejected and require operator investigation; this version does not include a proposal refresh CLI. Database administrators can bypass application controls. Contacts are additive; missing facts never clear existing fields. Empty diffs can still be explicitly approved and applied, incrementing the mock version; a production UI should hide that no-op operation.
 
 No UI, screenshots, hosting or deployment. Demo approval is explicit in code by a named synthetic reviewer after printing the diff. A production reviewer interface is not included. See docs/PLAN.md, docs/ASSUMPTIONS.md and docs/BLOCKERS.md.
+
+## Verified native CI
+
+[Public source](https://github.com/umair24171/sales-call-to-crm-sync) and [successful Actions run](https://github.com/umair24171/sales-call-to-crm-sync/actions/runs/40031451224), code commit `cc1bc499c73958e810218b9baee00d2c6fd3f8e0`. Native PostgreSQL: 30 discovered, 30 passed, 0 environment-specific skipped, zero failed. Embedded complement: 30 passed, 0 environment-specific skipped, zero failed. All 30 distinct cases executed successfully in at least one appropriate environment. Docker Compose built and ran the demo from the runner’s fresh checkout. No hosting deployment. Real logs: docs/native-ci-output.txt.

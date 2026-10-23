@@ -1,0 +1,738 @@
+﻿2026-10-23T22:06:43.5580455Z Current runner version: '2.338.0'
+2026-10-23T22:06:43.5597919Z ##[group]Runner Image Provisioner
+2026-10-23T22:06:43.5598489Z Hosted Compute Agent
+2026-10-23T22:06:43.5598843Z Version: 20261012.601
+2026-10-23T22:06:43.5599205Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-23T22:06:43.5599732Z Build Date: 2026-10-12T17:48:21Z
+2026-10-23T22:06:43.5600153Z Worker ID: {44a6542d-cf10-458c-b146-a7ff47c6900a}
+2026-10-23T22:06:43.5600577Z Region: westus3
+2026-10-23T22:06:43.5600908Z Cloud: Azure
+2026-10-23T22:06:43.5601228Z ##[endgroup]
+2026-10-23T22:06:43.5602262Z ##[group]Operating System
+2026-10-23T22:06:43.5602659Z Ubuntu
+2026-10-23T22:06:43.5602952Z 26.04.1
+2026-10-23T22:06:43.5603414Z LTS
+2026-10-23T22:06:43.5603717Z ##[endgroup]
+2026-10-23T22:06:43.5604088Z ##[group]Runner Image
+2026-10-23T22:06:43.5604468Z Image: ubuntu-26.04
+2026-10-23T22:06:43.5604790Z Version: 20261012.163.1
+2026-10-23T22:06:43.5605566Z Included Software: https://github.com/actions/runner-images/blob/ubuntu26/20261012.163/images/ubuntu/Ubuntu2604-Readme.md
+2026-10-23T22:06:43.5606467Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu26%2F20261012.163
+2026-10-23T22:06:43.5607255Z ##[endgroup]
+2026-10-23T22:06:43.5607946Z ##[group]GITHUB_TOKEN Permissions
+2026-10-23T22:06:43.5609343Z Contents: read
+2026-10-23T22:06:43.5609667Z Metadata: read
+2026-10-23T22:06:43.5610079Z Packages: read
+2026-10-23T22:06:43.5610405Z ##[endgroup]
+2026-10-23T22:06:43.5611695Z Secret source: Actions
+2026-10-23T22:06:43.5612235Z Cache mode: write
+2026-10-23T22:06:43.5612794Z Prepare workflow directory
+2026-10-23T22:06:43.5869301Z Prepare all required actions
+2026-10-23T22:06:43.5899504Z Getting action download info
+2026-10-23T22:06:43.8808249Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-23T22:06:43.9537662Z Download action repository 'actions/setup-node@v4' (SHA:49933ea5288caeca8642d1e84afbd3f7d6820020)
+2026-10-23T22:06:44.1066882Z Complete job name: verify
+2026-10-23T22:06:44.1458607Z ##[group]Checking docker version
+2026-10-23T22:06:44.1466523Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+2026-10-23T22:06:44.2384952Z '1.54'
+2026-10-23T22:06:44.2402874Z Docker daemon API version: '1.54'
+2026-10-23T22:06:44.2403596Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+2026-10-23T22:06:44.2556617Z '1.54'
+2026-10-23T22:06:44.2571810Z Docker client API version: '1.54'
+2026-10-23T22:06:44.2575052Z ##[endgroup]
+2026-10-23T22:06:44.2576281Z ##[group]Clean up resources from previous jobs
+2026-10-23T22:06:44.2580516Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=9e53ea"
+2026-10-23T22:06:44.2708692Z ##[command]/usr/bin/docker network prune --force --filter "label=9e53ea"
+2026-10-23T22:06:44.2829966Z ##[endgroup]
+2026-10-23T22:06:44.2830274Z ##[group]Create local container network
+2026-10-23T22:06:44.2837259Z ##[command]/usr/bin/docker network create --label 9e53ea github_network_fabfb5ca1e0f4eb39034cf9351c27495
+2026-10-23T22:06:44.3206704Z fe8f18865958868d705ce3c1db103dc69e0411790af247ded733a1d449cdde5d
+2026-10-23T22:06:44.3231399Z ##[endgroup]
+2026-10-23T22:06:44.3254473Z ##[group]Starting postgres service container
+2026-10-23T22:06:44.3268807Z ##[command]/usr/bin/docker pull postgres:16
+2026-10-23T22:06:44.9937392Z 16: Pulling from library/postgres
+2026-10-23T22:06:45.2047900Z f2be67225471: Pulling fs layer
+2026-10-23T22:06:45.2049527Z ef42abb17c7a: Pulling fs layer
+2026-10-23T22:06:45.2050526Z f2010d5c8971: Pulling fs layer
+2026-10-23T22:06:45.2051535Z c85ce0e29e80: Pulling fs layer
+2026-10-23T22:06:45.2052512Z 46109ed24d00: Pulling fs layer
+2026-10-23T22:06:45.2053846Z b1c4822f4553: Pulling fs layer
+2026-10-23T22:06:45.2054742Z 9fbbdc3bcbff: Pulling fs layer
+2026-10-23T22:06:45.2055887Z 48eee0ea92d8: Pulling fs layer
+2026-10-23T22:06:45.2057127Z d9b4aee93490: Pulling fs layer
+2026-10-23T22:06:45.2058003Z e9da7c9f979b: Pulling fs layer
+2026-10-23T22:06:45.2058741Z c79a7210985e: Pulling fs layer
+2026-10-23T22:06:45.2059451Z 852f46917486: Pulling fs layer
+2026-10-23T22:06:45.2061435Z 393ce45a5829: Pulling fs layer
+2026-10-23T22:06:45.2062234Z 25140b6d6501: Pulling fs layer
+2026-10-23T22:06:45.3548853Z 46109ed24d00: Download complete
+2026-10-23T22:06:45.4535306Z 9fbbdc3bcbff: Download complete
+2026-10-23T22:06:45.4554727Z 25140b6d6501: Download complete
+2026-10-23T22:06:45.4567393Z f2010d5c8971: Download complete
+2026-10-23T22:06:45.4568229Z d9b4aee93490: Download complete
+2026-10-23T22:06:45.4568836Z 48eee0ea92d8: Download complete
+2026-10-23T22:06:45.4569500Z ef42abb17c7a: Download complete
+2026-10-23T22:06:45.4570252Z e9da7c9f979b: Download complete
+2026-10-23T22:06:45.4571025Z 852f46917486: Download complete
+2026-10-23T22:06:45.4573761Z 393ce45a5829: Download complete
+2026-10-23T22:06:45.4578248Z b1c4822f4553: Download complete
+2026-10-23T22:06:45.4584366Z c85ce0e29e80: Download complete
+2026-10-23T22:06:45.6530431Z f2be67225471: Download complete
+2026-10-23T22:06:46.2535960Z c79a7210985e: Download complete
+2026-10-23T22:06:46.2542412Z 22f39cf62ad6: Download complete
+2026-10-23T22:06:46.2548369Z 29e2244f39ca: Download complete
+2026-10-23T22:06:46.3581202Z d9b4aee93490: Pull complete
+2026-10-23T22:06:46.3630549Z f2be67225471: Pull complete
+2026-10-23T22:06:46.4532330Z 46109ed24d00: Pull complete
+2026-10-23T22:06:46.4596965Z b1c4822f4553: Pull complete
+2026-10-23T22:06:46.5573790Z 48eee0ea92d8: Pull complete
+2026-10-23T22:06:46.6541033Z 9fbbdc3bcbff: Pull complete
+2026-10-23T22:06:46.6564652Z ef42abb17c7a: Pull complete
+2026-10-23T22:06:46.6606735Z c85ce0e29e80: Pull complete
+2026-10-23T22:06:47.8415528Z 25140b6d6501: Pull complete
+2026-10-23T22:06:47.8423129Z f2010d5c8971: Pull complete
+2026-10-23T22:06:47.8434692Z e9da7c9f979b: Pull complete
+2026-10-23T22:06:47.8440314Z 852f46917486: Pull complete
+2026-10-23T22:06:47.8459851Z 393ce45a5829: Pull complete
+2026-10-23T22:06:47.8469466Z c79a7210985e: Pull complete
+2026-10-23T22:06:47.8470587Z Digest: sha256:9e2cf6287f25c3151f4c9421ccce2b17f3e60061c111a29165e0d2cdd9ff0a97
+2026-10-23T22:06:47.8471167Z Status: Downloaded newer image for postgres:16
+2026-10-23T22:06:47.8476869Z docker.io/library/postgres:16
+2026-10-23T22:06:47.8538159Z ##[command]/usr/bin/docker create --name cc1fb3fdd5f6489bb3e784a8e1703e47_postgres16_316798 --label 9e53ea --network github_network_fabfb5ca1e0f4eb39034cf9351c27495 --network-alias postgres -p 5432:5432 --health-cmd "pg_isready -U portfolio" --health-interval 2s --health-timeout 2s --health-retries 30 -e "POSTGRES_USER=portfolio" -e "POSTGRES_PASSWORD=synthetic-local-only" -e "POSTGRES_DB=portfolio" -e GITHUB_ACTIONS=true -e CI=true postgres:16
+2026-10-23T22:06:50.4263663Z 72598c445ad68f631ae3b6146e6199cde157520c619911e8c9663c849e06720e
+2026-10-23T22:06:50.4287428Z ##[command]/usr/bin/docker start 72598c445ad68f631ae3b6146e6199cde157520c619911e8c9663c849e06720e
+2026-10-23T22:06:50.6041113Z 72598c445ad68f631ae3b6146e6199cde157520c619911e8c9663c849e06720e
+2026-10-23T22:06:50.6066713Z ##[command]/usr/bin/docker ps --all --filter id=72598c445ad68f631ae3b6146e6199cde157520c619911e8c9663c849e06720e --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+2026-10-23T22:06:50.6308385Z 72598c445ad68f631ae3b6146e6199cde157520c619911e8c9663c849e06720e Up Less than a second (health: starting)
+2026-10-23T22:06:50.6338431Z ##[command]/usr/bin/docker port 72598c445ad68f631ae3b6146e6199cde157520c619911e8c9663c849e06720e
+2026-10-23T22:06:50.6454939Z 5432/tcp -> 0.0.0.0:5432
+2026-10-23T22:06:50.6455315Z 5432/tcp -> [::]:5432
+2026-10-23T22:06:50.6502719Z ##[endgroup]
+2026-10-23T22:06:50.6509278Z ##[group]Waiting for all services to be ready
+2026-10-23T22:06:50.6519413Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 72598c445ad68f631ae3b6146e6199cde157520c619911e8c9663c849e06720e
+2026-10-23T22:06:50.6638588Z starting
+2026-10-23T22:06:50.6667464Z postgres service is starting, waiting 2 seconds before checking again.
+2026-10-23T22:06:52.6674851Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 72598c445ad68f631ae3b6146e6199cde157520c619911e8c9663c849e06720e
+2026-10-23T22:06:52.6785261Z healthy
+2026-10-23T22:06:52.6803909Z postgres service is healthy.
+2026-10-23T22:06:52.6804233Z ##[endgroup]
+2026-10-23T22:06:52.6989126Z ##[group]Run actions/checkout@v4
+2026-10-23T22:06:52.6989383Z with:
+2026-10-23T22:06:52.6989502Z   fetch-depth: 0
+2026-10-23T22:06:52.6989653Z   repository: umair24171/sales-call-to-crm-sync
+2026-10-23T22:06:52.6991114Z   token: ***
+2026-10-23T22:06:52.6991231Z   ssh-strict: true
+2026-10-23T22:06:52.6991351Z   ssh-user: git
+2026-10-23T22:06:52.6991476Z   persist-credentials: true
+2026-10-23T22:06:52.6991615Z   clean: true
+2026-10-23T22:06:52.6991746Z   sparse-checkout-cone-mode: true
+2026-10-23T22:06:52.6991892Z   fetch-tags: false
+2026-10-23T22:06:52.6992013Z   show-progress: true
+2026-10-23T22:06:52.6992133Z   lfs: false
+2026-10-23T22:06:52.6992242Z   submodules: false
+2026-10-23T22:06:52.6992363Z   set-safe-directory: true
+2026-10-23T22:06:52.6992526Z   allow-unsafe-pr-checkout: false
+2026-10-23T22:06:52.6992727Z env:
+2026-10-23T22:06:52.6992992Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:06:52.6993284Z ##[endgroup]
+2026-10-23T22:06:52.7779491Z Syncing repository: umair24171/sales-call-to-crm-sync
+2026-10-23T22:06:52.7781080Z ##[group]Getting Git version info
+2026-10-23T22:06:52.7781500Z Working directory is '/home/runner/work/sales-call-to-crm-sync/sales-call-to-crm-sync'
+2026-10-23T22:06:52.7782090Z [command]/usr/bin/git version
+2026-10-23T22:06:52.7787561Z git version 2.55.0
+2026-10-23T22:06:52.7800523Z ##[endgroup]
+2026-10-23T22:06:52.7811807Z Temporarily overriding HOME='/home/runner/work/_temp/40b4fd47-5aee-4ee7-b22e-2b960827663e' before making global git config changes
+2026-10-23T22:06:52.7812624Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-23T22:06:52.7816058Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/sales-call-to-crm-sync/sales-call-to-crm-sync
+2026-10-23T22:06:52.7875140Z Deleting the contents of '/home/runner/work/sales-call-to-crm-sync/sales-call-to-crm-sync'
+2026-10-23T22:06:52.7877621Z ##[group]Initializing the repository
+2026-10-23T22:06:52.7881660Z [command]/usr/bin/git init /home/runner/work/sales-call-to-crm-sync/sales-call-to-crm-sync
+2026-10-23T22:06:52.7998996Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-23T22:06:52.8011422Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-23T22:06:52.8011880Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-23T22:06:52.8012203Z hint: call:
+2026-10-23T22:06:52.8012369Z hint:
+2026-10-23T22:06:52.8012687Z hint: 	git config --global init.defaultBranch <name>
+2026-10-23T22:06:52.8012941Z hint:
+2026-10-23T22:06:52.8013317Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-23T22:06:52.8013597Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-23T22:06:52.8013837Z hint:
+2026-10-23T22:06:52.8014038Z hint: 	git branch -m <name>
+2026-10-23T22:06:52.8014178Z hint:
+2026-10-23T22:06:52.8014461Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-23T22:06:52.8014854Z Initialized empty Git repository in /home/runner/work/sales-call-to-crm-sync/sales-call-to-crm-sync/.git/
+2026-10-23T22:06:52.8015793Z [command]/usr/bin/git remote add origin https://github.com/umair24171/sales-call-to-crm-sync
+2026-10-23T22:06:52.8060142Z ##[endgroup]
+2026-10-23T22:06:52.8060489Z ##[group]Disabling automatic garbage collection
+2026-10-23T22:06:52.8062950Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-23T22:06:52.8096618Z ##[endgroup]
+2026-10-23T22:06:52.8096958Z ##[group]Setting up auth
+2026-10-23T22:06:52.8104559Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T22:06:52.8139836Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T22:06:52.8510044Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T22:06:52.8539132Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T22:06:52.8757199Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-23T22:06:52.8784577Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-23T22:06:52.9002295Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-23T22:06:52.9036390Z ##[endgroup]
+2026-10-23T22:06:52.9036642Z ##[group]Fetching the repository
+2026-10-23T22:06:52.9043183Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-10-23T22:06:53.4834879Z From https://github.com/umair24171/sales-call-to-crm-sync
+2026-10-23T22:06:53.4835375Z  * [new branch]      main       -> origin/main
+2026-10-23T22:06:53.4845767Z [command]/usr/bin/git branch --list --remote origin/main
+2026-10-23T22:06:53.4870762Z   origin/main
+2026-10-23T22:06:53.4877837Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+2026-10-23T22:06:53.4898104Z cc1bc499c73958e810218b9baee00d2c6fd3f8e0
+2026-10-23T22:06:53.4901796Z ##[endgroup]
+2026-10-23T22:06:53.4902192Z ##[group]Determining the checkout info
+2026-10-23T22:06:53.4902735Z ##[endgroup]
+2026-10-23T22:06:53.4907228Z [command]/usr/bin/git sparse-checkout disable
+2026-10-23T22:06:53.4952631Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-23T22:06:53.4978936Z ##[group]Checking out the ref
+2026-10-23T22:06:53.4981294Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2026-10-23T22:06:53.5037002Z Switched to a new branch 'main'
+2026-10-23T22:06:53.5038718Z branch 'main' set up to track 'origin/main'.
+2026-10-23T22:06:53.5042497Z ##[endgroup]
+2026-10-23T22:06:53.5077775Z [command]/usr/bin/git log -1 --format=%H
+2026-10-23T22:06:53.5098315Z cc1bc499c73958e810218b9baee00d2c6fd3f8e0
+2026-10-23T22:06:53.5308968Z ##[group]Run actions/setup-node@v4
+2026-10-23T22:06:53.5309133Z with:
+2026-10-23T22:06:53.5309257Z   node-version: 24
+2026-10-23T22:06:53.5309375Z   cache: npm
+2026-10-23T22:06:53.5309496Z   always-auth: false
+2026-10-23T22:06:53.5309624Z   check-latest: false
+2026-10-23T22:06:53.5310938Z   token: ***
+2026-10-23T22:06:53.5311058Z env:
+2026-10-23T22:06:53.5311304Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:06:53.5311464Z ##[endgroup]
+2026-10-23T22:06:53.6267659Z Found in cache @ /opt/hostedtoolcache/node/24.21.0/x64
+2026-10-23T22:06:53.6271023Z (node:2552) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-23T22:06:53.6271642Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-23T22:06:53.6272555Z ##[group]Environment details
+2026-10-23T22:06:53.9359752Z node: v24.21.0
+2026-10-23T22:06:53.9359945Z npm: 11.19.0
+2026-10-23T22:06:53.9360061Z yarn: 1.22.22
+2026-10-23T22:06:53.9360740Z ##[endgroup]
+2026-10-23T22:06:53.9390518Z [command]/opt/hostedtoolcache/node/24.21.0/x64/bin/npm config get cache
+2026-10-23T22:06:54.0585851Z /home/runner/.npm
+2026-10-23T22:06:54.2777101Z Cache hit for: node-cache-Linux-x64-npm-4b3f7b24832bca7c6582f04ddde04a7e0a749f628c7a03efb6749925ddc5e231
+2026-10-23T22:06:54.2844620Z (node:2552) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-23T22:06:55.3475650Z Received 18567171 of 18567171 (100.0%), 21.7 MBs/sec
+2026-10-23T22:06:55.3476345Z Cache Size: ~18 MB (18567171 B)
+2026-10-23T22:06:55.3490432Z [command]/usr/bin/tar -xf /home/runner/work/_temp/ff707903-dcd9-4102-a450-f9ee90ce42c2/cache.tzst -P -C /home/runner/work/sales-call-to-crm-sync/sales-call-to-crm-sync --use-compress-program unzstd
+2026-10-23T22:06:55.3780616Z Cache restored successfully
+2026-10-23T22:06:55.3791321Z Cache restored from key: node-cache-Linux-x64-npm-4b3f7b24832bca7c6582f04ddde04a7e0a749f628c7a03efb6749925ddc5e231
+2026-10-23T22:06:55.3947663Z ##[group]Run npm ci
+2026-10-23T22:06:55.3947857Z [36;1mnpm ci[0m
+2026-10-23T22:06:55.4097496Z shell: /usr/bin/bash -e {0}
+2026-10-23T22:06:55.4097679Z env:
+2026-10-23T22:06:55.4098149Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:06:55.4098324Z ##[endgroup]
+2026-10-23T22:06:56.7609389Z 
+2026-10-23T22:06:56.7615792Z added 25 packages, and audited 26 packages in 1s
+2026-10-23T22:06:56.7616048Z 
+2026-10-23T22:06:56.7616214Z 3 packages are looking for funding
+2026-10-23T22:06:56.7616402Z   run `npm fund` for details
+2026-10-23T22:06:56.7616544Z 
+2026-10-23T22:06:56.7616614Z found 0 vulnerabilities
+2026-10-23T22:06:56.7622911Z npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+2026-10-23T22:06:56.7623623Z npm warn install-scripts   esbuild@0.25.12 (postinstall: node install.js)
+2026-10-23T22:06:56.7623968Z npm warn install-scripts
+2026-10-23T22:06:56.7624551Z npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+2026-10-23T22:06:56.7841843Z ##[group]Run npm run format:check
+2026-10-23T22:06:56.7842037Z [36;1mnpm run format:check[0m
+2026-10-23T22:06:56.7892783Z shell: /usr/bin/bash -e {0}
+2026-10-23T22:06:56.7892931Z env:
+2026-10-23T22:06:56.7893377Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:06:56.7893547Z ##[endgroup]
+2026-10-23T22:06:56.8611057Z 
+2026-10-23T22:06:56.8611809Z > buildzn-sales-call-to-crm-sync@0.1.0 format:check
+2026-10-23T22:06:56.8612227Z > prettier --check src tests scripts *.json *.yml .github/workflows/*.yml *.md docs/*.md
+2026-10-23T22:06:56.8612450Z 
+2026-10-23T22:06:56.9186011Z Checking formatting...
+2026-10-23T22:06:57.2353320Z All matched files use Prettier code style!
+2026-10-23T22:06:57.2579260Z ##[group]Run npm run build
+2026-10-23T22:06:57.2579445Z [36;1mnpm run build[0m
+2026-10-23T22:06:57.2629751Z shell: /usr/bin/bash -e {0}
+2026-10-23T22:06:57.2629911Z env:
+2026-10-23T22:06:57.2630271Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:06:57.2630441Z ##[endgroup]
+2026-10-23T22:06:57.3333422Z 
+2026-10-23T22:06:57.3334121Z > buildzn-sales-call-to-crm-sync@0.1.0 build
+2026-10-23T22:06:57.3334498Z > tsc --noEmit
+2026-10-23T22:06:57.3334617Z 
+2026-10-23T22:06:58.0141492Z ##[group]Run npm test
+2026-10-23T22:06:58.0141667Z [36;1mnpm test[0m
+2026-10-23T22:06:58.0192280Z shell: /usr/bin/bash -e {0}
+2026-10-23T22:06:58.0192429Z env:
+2026-10-23T22:06:58.0192944Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:06:58.0193296Z ##[endgroup]
+2026-10-23T22:06:58.0951255Z 
+2026-10-23T22:06:58.0951939Z > buildzn-sales-call-to-crm-sync@0.1.0 test
+2026-10-23T22:06:58.0952275Z > node --import tsx --test --test-concurrency=1 tests/*.test.ts
+2026-10-23T22:06:58.0952441Z 
+2026-10-23T22:06:58.3891105Z ✔ 01 multi-speaker evidence and two same-company contacts retained (79.895976ms)
+2026-10-23T22:06:58.3993280Z ✔ 02 conflicting budgets and dates withheld with flags (10.823109ms)
+2026-10-23T22:06:58.4099538Z ✔ 02 conflicting next steps do not write detached dates (10.474814ms)
+2026-10-23T22:06:58.4271100Z ✔ 03 missing fields preserve CRM values; no next step flagged (16.721202ms)
+2026-10-23T22:06:58.4398532Z ✔ 04 next week anchored in timezone with review flag (12.876515ms)
+2026-10-23T22:06:58.4517337Z ✔ 05 transcript number error not invented (11.841144ms)
+2026-10-23T22:06:58.4623696Z ✔ 05 unsupported currency withheld (10.627874ms)
+2026-10-23T22:06:58.4720016Z ✔ 05 extra precision cannot silently round a transcript budget (9.513224ms)
+2026-10-23T22:06:58.4845706Z ✔ 06 mixed Urdu English grounded fields (12.178822ms)
+2026-10-23T22:06:58.4968975Z ✔ 07 duplicate call ID and duplicate content under another ID reuse checkpoint (12.625577ms)
+2026-10-23T22:06:58.5064589Z ✔ 07 reused call ID with changed transcript rejected (9.580956ms)
+2026-10-23T22:06:58.5170666Z ✔ 08 CRM contradiction shown as exact before and after, never auto-written (10.501734ms)
+2026-10-23T22:06:58.5433707Z ✔ 09 long transcript processed through final chunk and cross-chunk conflict retained (26.068615ms)
+2026-10-23T22:06:58.5543140Z ✔ 09 long single utterance chunk retains final next step (11.056222ms)
+2026-10-23T22:06:58.5667693Z ✔ 10 no write without approval; dry run never writes (12.359215ms)
+2026-10-23T22:06:58.5772734Z ✔ 10 forged displayed hash rejected (10.493773ms)
+2026-10-23T22:06:58.5912906Z ✔ 10 CRM version drift rejects approval and application (13.94094ms)
+2026-10-23T22:06:58.6030053Z ✔ 10 altered diff after approval cannot write (11.67289ms)
+2026-10-23T22:06:58.6303726Z ✔ 11 concurrent applies and retries produce one audit and one version increment (27.150988ms)
+2026-10-23T22:06:58.6455126Z ✔ 11 precommit failure rolls back write and audit then resumes (15.168762ms)
+2026-10-23T22:06:58.6558953Z ✔ 12 injected authorization text never grants approval (10.429065ms)
+2026-10-23T22:06:58.6644989Z ✔ 12 ungrounded or arbitrary model fields rejected {"candidates":[{"field":"admin","value":true,"speaker":"Amina","quote":"budget is $10,000 USD."}],"contacts":[],"flags":[]} (8.495139ms)
+2026-10-23T22:06:58.6732140Z ✔ 12 ungrounded or arbitrary model fields rejected {"candidates":[{"field":"budgetMinor","value":9000000,"speaker":"Amina","quote":"budget is $10,000 USD. close date: 2026-02-15."}],"contacts":[],"flags":[]} (8.596312ms)
+2026-10-23T22:06:58.6817987Z ✔ 12 ungrounded or arbitrary model fields rejected {"candidates":[],"contacts":["Invented Person"],"flags":[]} (8.677304ms)
+2026-10-23T22:06:58.6903550Z ✔ 12 fabricated speaker attribution rejected (8.477923ms)
+2026-10-23T22:06:58.6993243Z ✔ 13 provider timeout creates no writable proposal (8.914872ms)
+2026-10-23T22:06:58.7069486Z ✔ 13 invalid dates timezone and empty or oversized transcript rejected (7.628793ms)
+2026-10-23T22:06:58.7137262Z ✔ unit chunking retains source tail and valid exact dates (6.71809ms)
+2026-10-23T22:06:58.7237841Z ✔ 02 conflicts inside a single utterance stay separate (10.037064ms)
+2026-10-23T22:06:58.7355490Z ✔ 02 detectable source conflict survives model omission (9.538963ms)
+2026-10-23T22:06:58.7548575Z ℹ tests 30
+2026-10-23T22:06:58.7548772Z ℹ suites 0
+2026-10-23T22:06:58.7548910Z ℹ pass 30
+2026-10-23T22:06:58.7549039Z ℹ fail 0
+2026-10-23T22:06:58.7549167Z ℹ cancelled 0
+2026-10-23T22:06:58.7549381Z ℹ skipped 0
+2026-10-23T22:06:58.7550303Z ℹ todo 0
+2026-10-23T22:06:58.7550661Z ℹ duration_ms 635.828187
+2026-10-23T22:06:58.7702155Z ##[group]Run DATABASE_URL= TEST_PGLITE=1 npm test
+2026-10-23T22:06:58.7702420Z [36;1mDATABASE_URL= TEST_PGLITE=1 npm test[0m
+2026-10-23T22:06:58.7754980Z shell: /usr/bin/bash -e {0}
+2026-10-23T22:06:58.7755163Z env:
+2026-10-23T22:06:58.7755533Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:06:58.7755700Z ##[endgroup]
+2026-10-23T22:06:58.8600936Z 
+2026-10-23T22:06:58.8601531Z > buildzn-sales-call-to-crm-sync@0.1.0 test
+2026-10-23T22:06:58.8601909Z > node --import tsx --test --test-concurrency=1 tests/*.test.ts
+2026-10-23T22:06:58.8602070Z 
+2026-10-23T22:07:00.2542274Z ✔ 01 multi-speaker evidence and two same-company contacts retained (867.926984ms)
+2026-10-23T22:07:00.2542988Z ✔ 02 conflicting budgets and dates withheld with flags (11.357845ms)
+2026-10-23T22:07:00.2543664Z ✔ 02 conflicting next steps do not write detached dates (10.489216ms)
+2026-10-23T22:07:00.2544174Z ✔ 03 missing fields preserve CRM values; no next step flagged (16.054877ms)
+2026-10-23T22:07:00.2544903Z ✔ 04 next week anchored in timezone with review flag (10.790089ms)
+2026-10-23T22:07:00.2546443Z ✔ 05 transcript number error not invented (10.237365ms)
+2026-10-23T22:07:00.2547064Z ✔ 05 unsupported currency withheld (8.174475ms)
+2026-10-23T22:07:00.2548074Z ✔ 05 extra precision cannot silently round a transcript budget (6.904601ms)
+2026-10-23T22:07:00.2548494Z ✔ 06 mixed Urdu English grounded fields (9.922591ms)
+2026-10-23T22:07:00.2548953Z ✔ 07 duplicate call ID and duplicate content under another ID reuse checkpoint (10.608766ms)
+2026-10-23T22:07:00.2549433Z ✔ 07 reused call ID with changed transcript rejected (8.607619ms)
+2026-10-23T22:07:00.2549997Z ✔ 08 CRM contradiction shown as exact before and after, never auto-written (9.53695ms)
+2026-10-23T22:07:00.2550887Z ✔ 09 long transcript processed through final chunk and cross-chunk conflict retained (22.367466ms)
+2026-10-23T22:07:00.2551669Z ✔ 09 long single utterance chunk retains final next step (7.541261ms)
+2026-10-23T22:07:00.2558062Z ✔ 10 no write without approval; dry run never writes (12.212423ms)
+2026-10-23T22:07:00.2558653Z ✔ 10 forged displayed hash rejected (7.472357ms)
+2026-10-23T22:07:00.2559067Z ✔ 10 CRM version drift rejects approval and application (13.149176ms)
+2026-10-23T22:07:00.2559474Z ✔ 10 altered diff after approval cannot write (10.92989ms)
+2026-10-23T22:07:00.2559942Z ✔ 11 concurrent applies and retries produce one audit and one version increment (17.683573ms)
+2026-10-23T22:07:00.2560412Z ✔ 11 precommit failure rolls back write and audit then resumes (15.08824ms)
+2026-10-23T22:07:00.2560880Z ✔ 12 injected authorization text never grants approval (11.857518ms)
+2026-10-23T22:07:00.2562148Z ✔ 12 ungrounded or arbitrary model fields rejected {"candidates":[{"field":"admin","value":true,"speaker":"Amina","quote":"budget is $10,000 USD."}],"contacts":[],"flags":[]} (5.480854ms)
+2026-10-23T22:07:00.2563728Z ✔ 12 ungrounded or arbitrary model fields rejected {"candidates":[{"field":"budgetMinor","value":9000000,"speaker":"Amina","quote":"budget is $10,000 USD. close date: 2026-02-15."}],"contacts":[],"flags":[]} (5.172258ms)
+2026-10-23T22:07:00.2564846Z ✔ 12 ungrounded or arbitrary model fields rejected {"candidates":[],"contacts":["Invented Person"],"flags":[]} (5.890522ms)
+2026-10-23T22:07:00.2565465Z ✔ 12 fabricated speaker attribution rejected (4.944856ms)
+2026-10-23T22:07:00.2565909Z ✔ 13 provider timeout creates no writable proposal (5.745653ms)
+2026-10-23T22:07:00.2566474Z ✔ 13 invalid dates timezone and empty or oversized transcript rejected (6.19475ms)
+2026-10-23T22:07:00.2567232Z ✔ unit chunking retains source tail and valid exact dates (2.543185ms)
+2026-10-23T22:07:00.2567726Z ✔ 02 conflicts inside a single utterance stay separate (5.880526ms)
+2026-10-23T22:07:00.2568216Z ✔ 02 detectable source conflict survives model omission (5.873366ms)
+2026-10-23T22:07:00.3026631Z ℹ tests 30
+2026-10-23T22:07:00.3026929Z ℹ suites 0
+2026-10-23T22:07:00.3027128Z ℹ pass 30
+2026-10-23T22:07:00.3027319Z ℹ fail 0
+2026-10-23T22:07:00.3028105Z ℹ cancelled 0
+2026-10-23T22:07:00.3028350Z ℹ skipped 0
+2026-10-23T22:07:00.3028542Z ℹ todo 0
+2026-10-23T22:07:00.3028782Z ℹ duration_ms 1417.899837
+2026-10-23T22:07:00.3155926Z ##[group]Run npm run scan
+2026-10-23T22:07:00.3156106Z [36;1mnpm run scan[0m
+2026-10-23T22:07:00.3206587Z shell: /usr/bin/bash -e {0}
+2026-10-23T22:07:00.3206738Z env:
+2026-10-23T22:07:00.3207096Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:07:00.3207263Z ##[endgroup]
+2026-10-23T22:07:00.3947309Z 
+2026-10-23T22:07:00.3947880Z > buildzn-sales-call-to-crm-sync@0.1.0 scan
+2026-10-23T22:07:00.3948143Z > node scripts/scan.mjs
+2026-10-23T22:07:00.3948236Z 
+2026-10-23T22:07:00.7317703Z Scanned 32 tracked files and 64 historical blobs: no configured credential patterns or env files. Synthetic fixtures reviewed separately. This pattern scan is not proof of absence.
+2026-10-23T22:07:00.7440371Z ##[group]Run npm run demo
+2026-10-23T22:07:00.7440643Z [36;1mnpm run demo[0m
+2026-10-23T22:07:00.7491755Z shell: /usr/bin/bash -e {0}
+2026-10-23T22:07:00.7491912Z env:
+2026-10-23T22:07:00.7492266Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:07:00.7492432Z ##[endgroup]
+2026-10-23T22:07:00.8282161Z 
+2026-10-23T22:07:00.8282679Z > buildzn-sales-call-to-crm-sync@0.1.0 demo
+2026-10-23T22:07:00.8283586Z > node --import tsx src/demo.ts
+2026-10-23T22:07:00.8283746Z 
+2026-10-23T22:07:01.0234993Z All data synthetic. No external CRM writes or messages.
+2026-10-23T22:07:01.0235770Z Review diff: {
+2026-10-23T22:07:01.0236233Z   "contacts": {
+2026-10-23T22:07:01.0236412Z     "after": [
+2026-10-23T22:07:01.0236542Z       "Amina",
+2026-10-23T22:07:01.0236658Z       "Bilal"
+2026-10-23T22:07:01.0236775Z     ],
+2026-10-23T22:07:01.0236898Z     "before": []
+2026-10-23T22:07:01.0237015Z   },
+2026-10-23T22:07:01.0237137Z   "nextStep": {
+2026-10-23T22:07:01.0237506Z     "after": "send proposal next week",
+2026-10-23T22:07:01.0237719Z     "before": null
+2026-10-23T22:07:01.0237839Z   },
+2026-10-23T22:07:01.0237948Z   "budgetMinor": {
+2026-10-23T22:07:01.0238074Z     "after": 1000000,
+2026-10-23T22:07:01.0238206Z     "before": 500000
+2026-10-23T22:07:01.0238324Z   },
+2026-10-23T22:07:01.0238435Z   "nextStepDate": {
+2026-10-23T22:07:01.0238663Z     "after": "2026-01-26",
+2026-10-23T22:07:01.0238846Z     "before": null
+2026-10-23T22:07:01.0238965Z   }
+2026-10-23T22:07:01.0239078Z }
+2026-10-23T22:07:01.0239310Z Flags: [ 'crm-contradiction:budgetMinor', 'vague-next-week:2026-01-26' ]
+2026-10-23T22:07:01.0239834Z Follow-up draft: Synthetic follow-up draft. Proposed next step: send proposal next week. Review flags: crm-contradiction:budgetMinor, vague-next-week:2026-01-26.
+2026-10-23T22:07:01.0240406Z Before approval CRM version: 1
+2026-10-23T22:07:01.0269721Z Dry run: dry-run
+2026-10-23T22:07:01.0289094Z Explicitly approved apply: applied
+2026-10-23T22:07:01.0296278Z Retry: already-applied
+2026-10-23T22:07:01.0299448Z Audit records: 1
+2026-10-23T22:07:01.0518747Z ##[group]Run unset DATABASE_URL
+2026-10-23T22:07:01.0518942Z [36;1munset DATABASE_URL[0m
+2026-10-23T22:07:01.0519191Z [36;1mdocker compose up --build --abort-on-container-exit --exit-code-from app[0m
+2026-10-23T22:07:01.0519434Z [36;1mdocker compose down -v[0m
+2026-10-23T22:07:01.0570303Z shell: /usr/bin/bash -e {0}
+2026-10-23T22:07:01.0570473Z env:
+2026-10-23T22:07:01.0570824Z   DATABASE_URL: ***localhost:5432/portfolio
+2026-10-23T22:07:01.0570990Z ##[endgroup]
+2026-10-23T22:07:01.4573766Z  Image sales-call-to-crm-sync-app Building 
+2026-10-23T22:07:01.5129972Z #1 [internal] load local bake definitions
+2026-10-23T22:07:01.6132814Z #1 reading from stdin 596B done
+2026-10-23T22:07:01.6133157Z #1 DONE 0.0s
+2026-10-23T22:07:01.6133277Z 
+2026-10-23T22:07:01.6133451Z #2 [internal] load build definition from Dockerfile
+2026-10-23T22:07:01.6133769Z #2 transferring dockerfile:
+2026-10-23T22:07:01.7740633Z #2 transferring dockerfile: 164B done
+2026-10-23T22:07:01.7741073Z #2 DONE 0.0s
+2026-10-23T22:07:01.7741184Z 
+2026-10-23T22:07:01.7741434Z #3 [internal] load metadata for docker.io/library/node:24-bookworm-slim
+2026-10-23T22:07:01.9432161Z #3 ...
+2026-10-23T22:07:01.9432306Z 
+2026-10-23T22:07:01.9432516Z #4 [auth] library/node:pull token for registry-1.docker.io
+2026-10-23T22:07:01.9432731Z #4 DONE 0.0s
+2026-10-23T22:07:02.0933152Z 
+2026-10-23T22:07:02.0933849Z #3 [internal] load metadata for docker.io/library/node:24-bookworm-slim
+2026-10-23T22:07:02.3545214Z #3 DONE 0.7s
+2026-10-23T22:07:02.4596593Z 
+2026-10-23T22:07:02.4597641Z #5 [internal] load .dockerignore
+2026-10-23T22:07:02.4598062Z #5 transferring context: 76B done
+2026-10-23T22:07:02.4598291Z #5 DONE 0.0s
+2026-10-23T22:07:02.4598398Z 
+2026-10-23T22:07:02.4598530Z #6 [internal] load build context
+2026-10-23T22:07:02.4598794Z #6 transferring context: 90.74kB done
+2026-10-23T22:07:02.4599034Z #6 DONE 0.0s
+2026-10-23T22:07:02.4599141Z 
+2026-10-23T22:07:02.4599541Z #7 [1/6] FROM docker.io/library/node:24-bookworm-slim@sha256:55fb5f5a527ea2c5c4a95f963e48ef90aa38c7b346054fdc8ee9957a2b55d205
+2026-10-23T22:07:02.4600306Z #7 resolve docker.io/library/node:24-bookworm-slim@sha256:55fb5f5a527ea2c5c4a95f963e48ef90aa38c7b346054fdc8ee9957a2b55d205 done
+2026-10-23T22:07:02.4600898Z #7 sha256:6d793208473aa7d9ccc02b9de99aee40e4d6e73065d5307d076fad3ba554d580 450B / 450B 0.1s done
+2026-10-23T22:07:02.5911574Z #7 sha256:c0e48fd1aa256850e18f180365b8fa3e55ae2197e85461fd3392cfb5c4c8e5e7 9.44MB / 51.08MB 0.2s
+2026-10-23T22:07:02.5912309Z #7 sha256:f2b8e65232e105b573ea2f37c4a2ec56bcf0b63687ae2bbe329cf4252f30bc1d 0B / 1.71MB 0.2s
+2026-10-23T22:07:02.5912978Z #7 sha256:47e82ed2c7200e6bb57827745085027ba425376a5ed4ba4a8e295a4e3b5d1b40 3.31kB / 3.31kB 0.2s done
+2026-10-23T22:07:02.7012752Z #7 sha256:c0e48fd1aa256850e18f180365b8fa3e55ae2197e85461fd3392cfb5c4c8e5e7 51.08MB / 51.08MB 0.3s
+2026-10-23T22:07:02.7013400Z #7 sha256:f2b8e65232e105b573ea2f37c4a2ec56bcf0b63687ae2bbe329cf4252f30bc1d 1.71MB / 1.71MB 0.2s done
+2026-10-23T22:07:02.7013845Z #7 sha256:11422d7ca1a44390a32bd8d8d9dc5946b4d053b3bbd9507d682e35584ba84a26 5.24MB / 28.25MB 0.2s
+2026-10-23T22:07:02.8522358Z #7 sha256:11422d7ca1a44390a32bd8d8d9dc5946b4d053b3bbd9507d682e35584ba84a26 28.25MB / 28.25MB 0.3s
+2026-10-23T22:07:03.3105810Z #7 sha256:c0e48fd1aa256850e18f180365b8fa3e55ae2197e85461fd3392cfb5c4c8e5e7 51.08MB / 51.08MB 0.8s done
+2026-10-23T22:07:03.3106347Z #7 sha256:11422d7ca1a44390a32bd8d8d9dc5946b4d053b3bbd9507d682e35584ba84a26 28.25MB / 28.25MB 0.7s done
+2026-10-23T22:07:03.3106754Z #7 extracting sha256:11422d7ca1a44390a32bd8d8d9dc5946b4d053b3bbd9507d682e35584ba84a26
+2026-10-23T22:07:03.6399545Z #7 extracting sha256:11422d7ca1a44390a32bd8d8d9dc5946b4d053b3bbd9507d682e35584ba84a26 0.5s done
+2026-10-23T22:07:03.6400268Z #7 DONE 1.3s
+2026-10-23T22:07:03.7962395Z 
+2026-10-23T22:07:03.7963891Z #7 [1/6] FROM docker.io/library/node:24-bookworm-slim@sha256:55fb5f5a527ea2c5c4a95f963e48ef90aa38c7b346054fdc8ee9957a2b55d205
+2026-10-23T22:07:03.7965115Z #7 extracting sha256:47e82ed2c7200e6bb57827745085027ba425376a5ed4ba4a8e295a4e3b5d1b40 done
+2026-10-23T22:07:03.7965747Z #7 extracting sha256:c0e48fd1aa256850e18f180365b8fa3e55ae2197e85461fd3392cfb5c4c8e5e7
+2026-10-23T22:07:04.3063698Z #7 extracting sha256:c0e48fd1aa256850e18f180365b8fa3e55ae2197e85461fd3392cfb5c4c8e5e7 0.7s done
+2026-10-23T22:07:04.3064031Z #7 DONE 1.9s
+2026-10-23T22:07:04.4864711Z 
+2026-10-23T22:07:04.4865547Z #7 [1/6] FROM docker.io/library/node:24-bookworm-slim@sha256:55fb5f5a527ea2c5c4a95f963e48ef90aa38c7b346054fdc8ee9957a2b55d205
+2026-10-23T22:07:04.4866046Z #7 extracting sha256:f2b8e65232e105b573ea2f37c4a2ec56bcf0b63687ae2bbe329cf4252f30bc1d 0.0s done
+2026-10-23T22:07:04.4866431Z #7 extracting sha256:6d793208473aa7d9ccc02b9de99aee40e4d6e73065d5307d076fad3ba554d580 done
+2026-10-23T22:07:04.4866664Z #7 DONE 2.0s
+2026-10-23T22:07:04.4866738Z 
+2026-10-23T22:07:04.4866806Z #8 [2/6] WORKDIR /app
+2026-10-23T22:07:06.0956818Z #8 DONE 1.8s
+2026-10-23T22:07:06.2579866Z 
+2026-10-23T22:07:06.2580565Z #9 [3/6] COPY package*.json ./
+2026-10-23T22:07:06.2580848Z #9 DONE 0.0s
+2026-10-23T22:07:06.2580929Z 
+2026-10-23T22:07:06.2580995Z #10 [4/6] RUN npm ci
+2026-10-23T22:07:07.0810073Z #10 0.974 
+2026-10-23T22:07:07.0810829Z #10 0.974 added 25 packages, and audited 26 packages in 823ms
+2026-10-23T22:07:07.0811386Z #10 0.974 
+2026-10-23T22:07:07.2334530Z #10 0.974 3 packages are looking for funding
+2026-10-23T22:07:07.2334863Z #10 0.974   run `npm fund` for details
+2026-10-23T22:07:07.2335043Z #10 0.974 
+2026-10-23T22:07:07.2335188Z #10 0.974 found 0 vulnerabilities
+2026-10-23T22:07:07.2335497Z #10 0.975 npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+2026-10-23T22:07:07.2335871Z #10 0.975 npm warn install-scripts   esbuild@0.25.12 (postinstall: node install.js)
+2026-10-23T22:07:07.2336115Z #10 0.975 npm warn install-scripts
+2026-10-23T22:07:07.2336458Z #10 0.975 npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+2026-10-23T22:07:07.2336748Z #10 0.976 npm notice
+2026-10-23T22:07:07.2336975Z #10 0.976 npm notice New major version of npm available! 11.19.1 -> 12.2.1
+2026-10-23T22:07:07.2337283Z #10 0.976 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.1
+2026-10-23T22:07:07.2337568Z #10 0.976 npm notice To update run: npm install -g npm@12.2.1
+2026-10-23T22:07:07.2337750Z #10 0.976 npm notice
+2026-10-23T22:07:07.5702797Z #10 DONE 1.5s
+2026-10-23T22:07:07.7414674Z 
+2026-10-23T22:07:07.7415184Z #11 [5/6] COPY . .
+2026-10-23T22:07:07.7415380Z #11 DONE 0.0s
+2026-10-23T22:07:07.7415452Z 
+2026-10-23T22:07:07.7415526Z #12 [6/6] RUN npm run build
+2026-10-23T22:07:07.7767494Z #12 0.186 
+2026-10-23T22:07:07.7767922Z #12 0.186 > buildzn-sales-call-to-crm-sync@0.1.0 build
+2026-10-23T22:07:07.7768262Z #12 0.186 > tsc --noEmit
+2026-10-23T22:07:07.7768467Z #12 0.186 
+2026-10-23T22:07:08.5121870Z #12 DONE 0.9s
+2026-10-23T22:07:08.6656072Z 
+2026-10-23T22:07:08.6656726Z #13 exporting to image
+2026-10-23T22:07:08.6657025Z #13 exporting layers
+2026-10-23T22:07:10.6740212Z #13 exporting layers 2.2s done
+2026-10-23T22:07:10.8415213Z #13 exporting manifest sha256:6163793229ffd0cec652ea47798ec989b9c40682560a36a4ffe27e3b3cb626c7 done
+2026-10-23T22:07:10.8415973Z #13 exporting config sha256:ec5423aa547d7d606eb824f7468f55203501eea245ae22b4daedc3591d64d495 done
+2026-10-23T22:07:10.8416695Z #13 exporting attestation manifest sha256:4dbe94064e5ddda227ee39620eaf7d2898a8fa338e803d9648523e60d658b9be done
+2026-10-23T22:07:10.8417380Z #13 exporting manifest list sha256:459dd516ec33f8b9a441aea031713ea7f8cb337a6ecd33f89384f8cf5ce7bac1 done
+2026-10-23T22:07:10.8417757Z #13 naming to docker.io/library/sales-call-to-crm-sync-app:latest done
+2026-10-23T22:07:10.8418059Z #13 unpacking to docker.io/library/sales-call-to-crm-sync-app:latest
+2026-10-23T22:07:11.0331903Z #13 unpacking to docker.io/library/sales-call-to-crm-sync-app:latest 0.3s done
+2026-10-23T22:07:11.0885393Z #13 DONE 2.5s
+2026-10-23T22:07:11.0885551Z 
+2026-10-23T22:07:11.0885670Z #14 resolving provenance for metadata file
+2026-10-23T22:07:11.0886250Z #14 DONE 0.0s
+2026-10-23T22:07:11.0886941Z  Image sales-call-to-crm-sync-app Built 
+2026-10-23T22:07:11.0903739Z  Network sales-call-to-crm-sync_default Creating 
+2026-10-23T22:07:11.1141578Z  Network sales-call-to-crm-sync_default Created 
+2026-10-23T22:07:11.1145428Z  Volume sales-call-to-crm-sync_pgdata Creating 
+2026-10-23T22:07:11.1158051Z  Volume sales-call-to-crm-sync_pgdata Created 
+2026-10-23T22:07:11.1161116Z  Container sales-call-to-crm-sync-db-1 Creating 
+2026-10-23T22:07:11.6246031Z  Container sales-call-to-crm-sync-db-1 Created 
+2026-10-23T22:07:11.6257319Z  Container sales-call-to-crm-sync-app-1 Creating 
+2026-10-23T22:07:11.6450990Z  Container sales-call-to-crm-sync-app-1 Created 
+2026-10-23T22:07:11.6557341Z Attaching to app-1, db-1
+2026-10-23T22:07:11.6688711Z  Container sales-call-to-crm-sync-db-1 Starting 
+2026-10-23T22:07:11.7732496Z  Container sales-call-to-crm-sync-db-1 Started 
+2026-10-23T22:07:11.7733425Z  Container sales-call-to-crm-sync-db-1 Waiting 
+2026-10-23T22:07:11.8035015Z db-1  | The files belonging to this database system will be owned by user "postgres".
+2026-10-23T22:07:11.8043667Z db-1  | This user must also own the server process.
+2026-10-23T22:07:11.8043967Z db-1  | 
+2026-10-23T22:07:11.8044639Z db-1  | The database cluster will be initialized with locale "en_US.utf8".
+2026-10-23T22:07:11.8045397Z db-1  | The default database encoding has accordingly been set to "UTF8".
+2026-10-23T22:07:11.8045880Z db-1  | The default text search configuration will be set to "english".
+2026-10-23T22:07:11.8046182Z db-1  | 
+2026-10-23T22:07:11.8046408Z db-1  | Data page checksums are disabled.
+2026-10-23T22:07:11.8046564Z db-1  | 
+2026-10-23T22:07:11.8046787Z db-1  | fixing permissions on existing directory /var/lib/postgresql/data ... ok
+2026-10-23T22:07:11.8047033Z db-1  | creating subdirectories ... ok
+2026-10-23T22:07:11.8047262Z db-1  | selecting dynamic shared memory implementation ... posix
+2026-10-23T22:07:11.8105103Z db-1  | selecting default max_connections ... 100
+2026-10-23T22:07:11.8257549Z db-1  | selecting default shared_buffers ... 128MB
+2026-10-23T22:07:11.8515667Z db-1  | selecting default time zone ... Etc/UTC
+2026-10-23T22:07:11.8519656Z db-1  | creating configuration files ... ok
+2026-10-23T22:07:11.9317065Z db-1  | running bootstrap script ... ok
+2026-10-23T22:07:12.1345798Z db-1  | performing post-bootstrap initialization ... ok
+2026-10-23T22:07:12.4397968Z db-1  | initdb: warning: enabling "trust" authentication for local connections
+2026-10-23T22:07:12.4398299Z db-1  | syncing data to disk ... ok
+2026-10-23T22:07:12.4398954Z db-1  | initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+2026-10-23T22:07:12.4399283Z db-1  | 
+2026-10-23T22:07:12.4399608Z db-1  | 
+2026-10-23T22:07:12.4400136Z db-1  | Success. You can now start the database server using:
+2026-10-23T22:07:12.4400462Z db-1  | 
+2026-10-23T22:07:12.4400803Z db-1  |     pg_ctl -D /var/lib/postgresql/data -l logfile start
+2026-10-23T22:07:12.4401087Z db-1  | 
+2026-10-23T22:07:12.4684658Z db-1  | waiting for server to start....2026-10-23 22:07:12.468 UTC [48] LOG:  starting PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-10-23T22:07:12.4687633Z db-1  | 2026-10-23 22:07:12.468 UTC [48] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-10-23T22:07:12.4709756Z db-1  | 2026-10-23 22:07:12.470 UTC [51] LOG:  database system was shut down at 2026-10-23 22:07:12 UTC
+2026-10-23T22:07:12.4741678Z db-1  | 2026-10-23 22:07:12.473 UTC [48] LOG:  database system is ready to accept connections
+2026-10-23T22:07:12.5555258Z db-1  |  done
+2026-10-23T22:07:12.5555458Z db-1  | server started
+2026-10-23T22:07:12.6335310Z db-1  | CREATE DATABASE
+2026-10-23T22:07:12.6339765Z db-1  | 
+2026-10-23T22:07:12.6340801Z db-1  | 
+2026-10-23T22:07:12.6341237Z db-1  | /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+2026-10-23T22:07:12.6341886Z db-1  | 
+2026-10-23T22:07:12.6351816Z db-1  | waiting for server to shut down...2026-10-23 22:07:12.635 UTC [48] LOG:  received fast shutdown request
+2026-10-23T22:07:12.6370071Z db-1  | .2026-10-23 22:07:12.635 UTC [48] LOG:  aborting any active transactions
+2026-10-23T22:07:12.6371202Z db-1  | 2026-10-23 22:07:12.636 UTC [48] LOG:  background worker "logical replication launcher" (PID 54) exited with exit code 1
+2026-10-23T22:07:12.6379292Z db-1  | 2026-10-23 22:07:12.637 UTC [49] LOG:  shutting down
+2026-10-23T22:07:12.6382331Z db-1  | 2026-10-23 22:07:12.638 UTC [49] LOG:  checkpoint starting: shutdown immediate
+2026-10-23T22:07:12.7142859Z db-1  | 2026-10-23 22:07:12.713 UTC [49] LOG:  checkpoint complete: wrote 926 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.065 s, sync=0.010 s, total=0.077 s; sync files=301, longest=0.009 s, average=0.001 s; distance=4273 kB, estimate=4273 kB; lsn=0/191F0F0, redo lsn=0/191F0F0
+2026-10-23T22:07:12.7212366Z db-1  | 2026-10-23 22:07:12.721 UTC [48] LOG:  database system is shut down
+2026-10-23T22:07:12.7353859Z db-1  |  done
+2026-10-23T22:07:12.7354044Z db-1  | server stopped
+2026-10-23T22:07:12.7364318Z db-1  | 
+2026-10-23T22:07:12.7364673Z db-1  | PostgreSQL init process complete; ready for start up.
+2026-10-23T22:07:12.7364969Z db-1  | 
+2026-10-23T22:07:12.7511223Z db-1  | 2026-10-23 22:07:12.750 UTC [1] LOG:  starting PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-10-23T22:07:12.7512111Z db-1  | 2026-10-23 22:07:12.750 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2026-10-23T22:07:12.7512714Z db-1  | 2026-10-23 22:07:12.750 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2026-10-23T22:07:12.7520655Z db-1  | 2026-10-23 22:07:12.751 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-10-23T22:07:12.7543972Z db-1  | 2026-10-23 22:07:12.754 UTC [64] LOG:  database system was shut down at 2026-10-23 22:07:12 UTC
+2026-10-23T22:07:12.7577831Z db-1  | 2026-10-23 22:07:12.757 UTC [1] LOG:  database system is ready to accept connections
+2026-10-23T22:07:14.2745242Z  Container sales-call-to-crm-sync-db-1 Healthy 
+2026-10-23T22:07:14.2745666Z  Container sales-call-to-crm-sync-app-1 Starting 
+2026-10-23T22:07:14.3665436Z  Container sales-call-to-crm-sync-app-1 Started 
+2026-10-23T22:07:14.4277211Z app-1  | 
+2026-10-23T22:07:14.4277568Z app-1  | > buildzn-sales-call-to-crm-sync@0.1.0 demo
+2026-10-23T22:07:14.4277813Z app-1  | > node --import tsx src/demo.ts
+2026-10-23T22:07:14.4278003Z app-1  | 
+2026-10-23T22:07:14.6246437Z app-1  | All data synthetic. No external CRM writes or messages.
+2026-10-23T22:07:14.6246809Z app-1  | Review diff: {
+2026-10-23T22:07:14.6247051Z app-1  |   "contacts": {
+2026-10-23T22:07:14.6247282Z app-1  |     "after": [
+2026-10-23T22:07:14.6247491Z app-1  |       "Amina",
+2026-10-23T22:07:14.6247691Z app-1  |       "Bilal"
+2026-10-23T22:07:14.6247886Z app-1  |     ],
+2026-10-23T22:07:14.6248125Z app-1  |     "before": []
+2026-10-23T22:07:14.6248334Z app-1  |   },
+2026-10-23T22:07:14.6248531Z app-1  |   "nextStep": {
+2026-10-23T22:07:14.6248822Z app-1  |     "after": "send proposal next week",
+2026-10-23T22:07:14.6249109Z app-1  |     "before": null
+2026-10-23T22:07:14.6249292Z app-1  |   },
+2026-10-23T22:07:14.6249425Z app-1  |   "budgetMinor": {
+2026-10-23T22:07:14.6249591Z app-1  |     "after": 1000000,
+2026-10-23T22:07:14.6249740Z app-1  |     "before": 500000
+2026-10-23T22:07:14.6249872Z app-1  |   },
+2026-10-23T22:07:14.6250006Z app-1  |   "nextStepDate": {
+2026-10-23T22:07:14.6250173Z app-1  |     "after": "2026-01-26",
+2026-10-23T22:07:14.6250380Z app-1  |     "before": null
+2026-10-23T22:07:14.6250557Z app-1  |   }
+2026-10-23T22:07:14.6250672Z app-1  | }
+2026-10-23T22:07:14.6250915Z app-1  | Flags: [ 'crm-contradiction:budgetMinor', 'vague-next-week:2026-01-26' ]
+2026-10-23T22:07:14.6252455Z app-1  | Follow-up draft: Synthetic follow-up draft. Proposed next step: send proposal next week. Review flags: crm-contradiction:budgetMinor, vague-next-week:2026-01-26.
+2026-10-23T22:07:14.6255870Z app-1  | Before approval CRM version: 1
+2026-10-23T22:07:14.6283301Z app-1  | Dry run: dry-run
+2026-10-23T22:07:14.6302983Z app-1  | Explicitly approved apply: applied
+2026-10-23T22:07:14.6308920Z app-1  | Retry: already-applied
+2026-10-23T22:07:14.6312800Z app-1  | Audit records: 1
+2026-10-23T22:07:14.7252109Z  Compose Stopping Aborting on container exit...
+2026-10-23T22:07:14.7252400Z 
+2026-10-23T22:07:14.7253142Z [Kapp-1 exited with code 0
+2026-10-23T22:07:14.7386371Z  Container sales-call-to-crm-sync-app-1 Stopping 
+2026-10-23T22:07:14.7388857Z  Container sales-call-to-crm-sync-app-1 Stopped 
+2026-10-23T22:07:14.7391396Z  Container sales-call-to-crm-sync-db-1 Stopping 
+2026-10-23T22:07:14.7463460Z db-1   | 2026-10-23 22:07:14.745 UTC [1] LOG:  received fast shutdown request
+2026-10-23T22:07:14.7482064Z db-1   | 2026-10-23 22:07:14.745 UTC [1] LOG:  aborting any active transactions
+2026-10-23T22:07:14.7483197Z db-1   | 2026-10-23 22:07:14.748 UTC [1] LOG:  background worker "logical replication launcher" (PID 67) exited with exit code 1
+2026-10-23T22:07:14.7489901Z db-1   | 2026-10-23 22:07:14.748 UTC [62] LOG:  shutting down
+2026-10-23T22:07:14.7494768Z db-1   | 2026-10-23 22:07:14.749 UTC [62] LOG:  checkpoint starting: shutdown immediate
+2026-10-23T22:07:14.7527731Z db-1   | 2026-10-23 22:07:14.752 UTC [62] LOG:  checkpoint complete: wrote 83 buffers (0.5%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.001 s, total=0.004 s; sync files=58, longest=0.001 s, average=0.001 s; distance=268 kB, estimate=268 kB; lsn=0/19622D0, redo lsn=0/19622D0
+2026-10-23T22:07:14.7576698Z db-1   | 2026-10-23 22:07:14.757 UTC [1] LOG:  database system is shut down
+2026-10-23T22:07:14.8405952Z  Container sales-call-to-crm-sync-db-1 Stopped 
+2026-10-23T22:07:14.8410812Z 
+2026-10-23T22:07:14.8411357Z [Kdb-1 exited with code 0
+2026-10-23T22:07:14.8914210Z  Container sales-call-to-crm-sync-app-1 Stopping 
+2026-10-23T22:07:14.8916255Z  Container sales-call-to-crm-sync-app-1 Stopped 
+2026-10-23T22:07:14.8916555Z  Container sales-call-to-crm-sync-app-1 Removing 
+2026-10-23T22:07:14.8995780Z  Container sales-call-to-crm-sync-app-1 Removed 
+2026-10-23T22:07:14.8996536Z  Container sales-call-to-crm-sync-db-1 Stopping 
+2026-10-23T22:07:14.8999459Z  Container sales-call-to-crm-sync-db-1 Stopped 
+2026-10-23T22:07:14.9000435Z  Container sales-call-to-crm-sync-db-1 Removing 
+2026-10-23T22:07:14.9057895Z  Container sales-call-to-crm-sync-db-1 Removed 
+2026-10-23T22:07:14.9062944Z  Volume sales-call-to-crm-sync_pgdata Removing 
+2026-10-23T22:07:14.9064764Z  Network sales-call-to-crm-sync_default Removing 
+2026-10-23T22:07:14.9535598Z  Network sales-call-to-crm-sync_default Removed 
+2026-10-23T22:07:15.0393384Z  Volume sales-call-to-crm-sync_pgdata Removed 
+2026-10-23T22:07:15.0492277Z Post job cleanup.
+2026-10-23T22:07:15.1295987Z (node:3890) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-23T22:07:15.1296737Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-23T22:07:15.1298486Z Cache hit occurred on the primary key node-cache-Linux-x64-npm-4b3f7b24832bca7c6582f04ddde04a7e0a749f628c7a03efb6749925ddc5e231, not saving cache.
+2026-10-23T22:07:15.1408996Z Post job cleanup.
+2026-10-23T22:07:15.2038061Z [command]/usr/bin/git version
+2026-10-23T22:07:15.2058856Z git version 2.55.0
+2026-10-23T22:07:15.2082283Z Temporarily overriding HOME='/home/runner/work/_temp/5070ebf5-a80e-462d-adf8-b18cb1edb7e4' before making global git config changes
+2026-10-23T22:07:15.2083197Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-23T22:07:15.2085875Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/sales-call-to-crm-sync/sales-call-to-crm-sync
+2026-10-23T22:07:15.2123798Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T22:07:15.2156044Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T22:07:15.2421198Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T22:07:15.2453218Z http.https://github.com/.extraheader
+2026-10-23T22:07:15.2485001Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-23T22:07:15.2538445Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T22:07:15.2834104Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-23T22:07:15.2861218Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-23T22:07:15.3216629Z Print service container logs: cc1fb3fdd5f6489bb3e784a8e1703e47_postgres16_316798
+2026-10-23T22:07:15.3219468Z ##[command]/usr/bin/docker logs --details 72598c445ad68f631ae3b6146e6199cde157520c619911e8c9663c849e06720e
+2026-10-23T22:07:15.3333604Z  The files belonging to this database system will be owned by user "postgres".
+2026-10-23T22:07:15.3334225Z  This user must also own the server process.
+2026-10-23T22:07:15.3334492Z  
+2026-10-23T22:07:15.3335492Z  initdb: warning: enabling "trust" authentication for local connections
+2026-10-23T22:07:15.3335762Z  The database cluster will be initialized with locale "en_US.utf8".
+2026-10-23T22:07:15.3336233Z  initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+2026-10-23T22:07:15.3336600Z  The default database encoding has accordingly been set to "UTF8".
+2026-10-23T22:07:15.3337098Z  2026-10-23 22:06:51.688 UTC [1] LOG:  starting PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-10-23T22:07:15.3337482Z  The default text search configuration will be set to "english".
+2026-10-23T22:07:15.3337793Z  2026-10-23 22:06:51.688 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2026-10-23T22:07:15.3338001Z  
+2026-10-23T22:07:15.3338214Z  2026-10-23 22:06:51.688 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2026-10-23T22:07:15.3338658Z  Data page checksums are disabled.
+2026-10-23T22:07:15.3338952Z  2026-10-23 22:06:51.689 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-10-23T22:07:15.3339184Z  
+2026-10-23T22:07:15.3339425Z  2026-10-23 22:06:51.691 UTC [64] LOG:  database system was shut down at 2026-10-23 22:06:51 UTC
+2026-10-23T22:07:15.3339711Z  fixing permissions on existing directory /var/lib/postgresql/data ... ok
+2026-10-23T22:07:15.3340031Z  2026-10-23 22:06:51.694 UTC [1] LOG:  database system is ready to accept connections
+2026-10-23T22:07:15.3340257Z  creating subdirectories ... ok
+2026-10-23T22:07:15.3340493Z  selecting dynamic shared memory implementation ... posix
+2026-10-23T22:07:15.3340719Z  selecting default max_connections ... 100
+2026-10-23T22:07:15.3340894Z  selecting default shared_buffers ... 128MB
+2026-10-23T22:07:15.3341088Z  selecting default time zone ... Etc/UTC
+2026-10-23T22:07:15.3341303Z  creating configuration files ... ok
+2026-10-23T22:07:15.3341469Z  running bootstrap script ... ok
+2026-10-23T22:07:15.3341665Z  performing post-bootstrap initialization ... ok
+2026-10-23T22:07:15.3341869Z  syncing data to disk ... ok
+2026-10-23T22:07:15.3342010Z  
+2026-10-23T22:07:15.3342115Z  
+2026-10-23T22:07:15.3342253Z  Success. You can now start the database server using:
+2026-10-23T22:07:15.3342457Z  
+2026-10-23T22:07:15.3342598Z      pg_ctl -D /var/lib/postgresql/data -l logfile start
+2026-10-23T22:07:15.3342795Z  
+2026-10-23T22:07:15.3343363Z  waiting for server to start....2026-10-23 22:06:51.305 UTC [48] LOG:  starting PostgreSQL 16.15 (Debian 16.15-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit
+2026-10-23T22:07:15.3343918Z  2026-10-23 22:06:51.305 UTC [48] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2026-10-23T22:07:15.3344223Z  2026-10-23 22:06:51.307 UTC [51] LOG:  database system was shut down at 2026-10-23 22:06:50 UTC
+2026-10-23T22:07:15.3344513Z  2026-10-23 22:06:51.311 UTC [48] LOG:  database system is ready to accept connections
+2026-10-23T22:07:15.3344718Z   done
+2026-10-23T22:07:15.3344826Z  server started
+2026-10-23T22:07:15.3344951Z  CREATE DATABASE
+2026-10-23T22:07:15.3345064Z  
+2026-10-23T22:07:15.3345163Z  
+2026-10-23T22:07:15.3345346Z  /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+2026-10-23T22:07:15.3345560Z  
+2026-10-23T22:07:15.3345761Z  waiting for server to shut down...2026-10-23 22:06:51.471 UTC [48] LOG:  received fast shutdown request
+2026-10-23T22:07:15.3346240Z  .2026-10-23 22:06:51.471 UTC [48] LOG:  aborting any active transactions
+2026-10-23T22:07:15.3346562Z  2026-10-23 22:06:51.473 UTC [48] LOG:  background worker "logical replication launcher" (PID 54) exited with exit code 1
+2026-10-23T22:07:15.3346854Z  2026-10-23 22:06:51.473 UTC [49] LOG:  shutting down
+2026-10-23T22:07:15.3347071Z  2026-10-23 22:06:51.474 UTC [49] LOG:  checkpoint starting: shutdown immediate
+2026-10-23T22:07:15.3347656Z  2026-10-23 22:06:51.555 UTC [49] LOG:  checkpoint complete: wrote 926 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.070 s, sync=0.009 s, total=0.082 s; sync files=301, longest=0.005 s, average=0.001 s; distance=4273 kB, estimate=4273 kB; lsn=0/191F0F0, redo lsn=0/191F0F0
+2026-10-23T22:07:15.3348324Z  2026-10-23 22:06:51.573 UTC [48] LOG:  database system is shut down
+2026-10-23T22:07:15.3348514Z   done
+2026-10-23T22:07:15.3348626Z  server stopped
+2026-10-23T22:07:15.3348738Z  
+2026-10-23T22:07:15.3348879Z  PostgreSQL init process complete; ready for start up.
+2026-10-23T22:07:15.3349045Z  
+2026-10-23T22:07:15.3368584Z Stop and remove container: cc1fb3fdd5f6489bb3e784a8e1703e47_postgres16_316798
+2026-10-23T22:07:15.3371925Z ##[command]/usr/bin/docker rm --force 72598c445ad68f631ae3b6146e6199cde157520c619911e8c9663c849e06720e
+2026-10-23T22:07:15.4402892Z 72598c445ad68f631ae3b6146e6199cde157520c619911e8c9663c849e06720e
+2026-10-23T22:07:15.4430793Z Remove container network: github_network_fabfb5ca1e0f4eb39034cf9351c27495
+2026-10-23T22:07:15.4434810Z ##[command]/usr/bin/docker network rm github_network_fabfb5ca1e0f4eb39034cf9351c27495
+2026-10-23T22:07:15.5115317Z github_network_fabfb5ca1e0f4eb39034cf9351c27495
+2026-10-23T22:07:15.5181163Z Cleaning up orphan processes
+2026-10-23T22:07:15.5522564Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

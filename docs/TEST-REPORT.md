@@ -1,25 +1,14 @@
 # Test report
 
-All fixtures and data are synthetic. Host: Node 24.19.0, TypeScript 5.9.3, PGlite 0.3.14 (embedded PostgreSQL).
+All data synthetic. [Successful native CI and Docker run](https://github.com/umair24171/sales-call-to-crm-sync/actions/runs/40031451224), verified code commit `cc1bc499c73958e810218b9baee00d2c6fd3f8e0`. Complete actual stdout: docs/native-ci-output.txt.
 
-Actual commands: `npm run build`, `TEST_PGLITE=1 npm test`, `TEST_PGLITE=1 npm run demo`.
+| Environment                    | Discovered | Passed | Failed | Skipped |
+| ------------------------------ | ---------: | -----: | -----: | ------: |
+| PostgreSQL service             |         30 |     30 |      0 |       0 |
+| Embedded PostgreSQL complement |         30 |     30 |      0 |       0 |
 
-| Check                     | Result                                         |
-| ------------------------- | ---------------------------------------------- |
-| TypeScript                | Passed                                         |
-| Tests discovered          | 30                                             |
-| Passed                    | 30                                             |
-| Failed                    | 0                                              |
-| Skipped                   | 0                                              |
-| Demo on embedded engine   | Passed                                         |
-| Fresh local clone         | See docs/clean-clone-output.txt once available |
-| Native PostgreSQL service | Not run                                        |
-| Docker Compose demo       | Not run                                        |
-| GitHub Actions            | Not run, no remote repository                  |
-| Live Claude API           | Not run, no paid calls                         |
+All 30 distinct cases passed in at least one appropriate environment. No test cases were skipped.
 
-Tests include unit checks, database integration and adversarial cases. The numbered test names map to the written edge cases in docs/PLAN.md. Full stdout is in docs/test-output.txt. Embedded transactions serialize, so local concurrent-call tests do not prove native lock behavior. Native concurrency and network transport behavior remain unverified.
+Dependency install, formatting, TypeScript, native database tests, embedded complement, configured full-history secret scan, native demo and Docker Compose build/demo passed. Docker ran from a fresh Actions checkout and isolated volume, with no deployment. Earlier fresh local-clone evidence remains in docs/clean-clone-output.txt. Live Claude requests were not made. There are no real customer fixtures.
 
-No tests were deleted or weakened to pass. Assertion normalization, implementation fixes and runtime runner fixes are described in PROGRESS.md and README.md. Source/policy fixture review found no real customer data. A configured credential-pattern scan includes tracked files and historical blobs; it is not a guarantee that all possible secrets are detectable.
-
-Fresh local git clone verified: npm ci, formatting, TypeScript, embedded PostgreSQL tests and demo passed. Working tree remained clean. Evidence: docs/clean-clone-output.txt. Native Docker and GitHub Actions gates remain unverified.
+Known platform-specific assertion/implementation fixes are in PROGRESS.md and history. No test was deleted or weakened: the invoice IPC correction inspects the readiness payload rather than an unrelated optional transport-handle argument.

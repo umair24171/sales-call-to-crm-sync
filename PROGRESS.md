@@ -1,13 +1,11 @@
 # Progress
 
-Done: plan, grounded extraction, speaker/contact preservation, chunking/global conflict handling, timezone-anchored dates, mock/Claude provider interface, persistent call deduplication, exact diff hashes, approvals, optimistic CRM version checks, transactional writes/audit, 30 passing tests and real embedded PostgreSQL demo.
+Done: scoped implementation, plan/assumptions, unit/integration/adversarial edge-case tests, synthetic seeded demo, README/architecture/tradeoffs, public GitHub publication and checkpoint history, topics/description, dependency/format/type checks, full-history configured secret scan, native PostgreSQL Actions verification and fresh-checkout Docker Compose demo.
 
-Results: TypeScript passed; 30 tests passed, 0 failed/skipped. Fixed long-utterance overlap without weakening conflict tests. No real customer data or live Claude calls.
+Measured: 30 distinct tests. Native 30 passed/0 environment-specific skipped; embedded 30 passed/0 environment-specific skipped; zero failures. Every distinct case passed in an appropriate environment. [CI evidence](https://github.com/umair24171/sales-call-to-crm-sync/actions/runs/40031451224), code `cc1bc499c73958e810218b9baee00d2c6fd3f8e0`.
 
-Running: none at checkpoint.
+Running: no background worker intentionally left running.
 
-Next: publish new repo and run native PostgreSQL Actions plus clean-clone Docker demo. Repository creation/auth and Docker remain blocked. See docs/BLOCKERS.md. No deployment. Portfolio site edits and PR must wait for the project gates; no existing repository changed.
+Next: include the verified project in the BuildZn portfolio PR after all four projects pass their gates. No deployment or merge. Keep production/model limitations explicit.
 
-Fresh local git clone verified: npm ci, formatting, TypeScript, embedded PostgreSQL tests and demo passed. Working tree remained clean. Evidence: docs/clean-clone-output.txt. Native Docker and GitHub Actions gates remain unverified.
-
-Final conflict review preserves detectable source candidates even if a model omits them. Test count is 30.
+Original host-only limitations were resolved using scoped GitHub access and hosted Actions, with no new credential or paid service. Original local checkpoint hashes are preserved in remote commit messages.
