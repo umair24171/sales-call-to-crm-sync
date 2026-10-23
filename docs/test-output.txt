@@ -1,0 +1,42 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> buildzn-sales-call-to-crm-sync@0.1.0 test
+> node --import tsx --test --test-concurrency=1 tests/*.test.ts
+
+✔ 01 multi-speaker evidence and two same-company contacts retained (1233.126862ms)
+✔ 02 conflicting budgets and dates withheld with flags (23.412467ms)
+✔ 02 conflicting next steps do not write detached dates (17.91648ms)
+✔ 03 missing fields preserve CRM values; no next step flagged (33.504353ms)
+✔ 04 next week anchored in timezone with review flag (18.320419ms)
+✔ 05 transcript number error not invented (18.176642ms)
+✔ 05 unsupported currency withheld (16.133277ms)
+✔ 05 extra precision cannot silently round a transcript budget (15.734745ms)
+✔ 06 mixed Urdu English grounded fields (23.433333ms)
+✔ 07 duplicate call ID and duplicate content under another ID reuse checkpoint (19.284194ms)
+✔ 07 reused call ID with changed transcript rejected (14.700865ms)
+✔ 08 CRM contradiction shown as exact before and after, never auto-written (14.609666ms)
+✔ 09 long transcript processed through final chunk and cross-chunk conflict retained (34.431303ms)
+✔ 09 long single utterance chunk retains final next step (12.933236ms)
+✔ 10 no write without approval; dry run never writes (20.271245ms)
+✔ 10 forged displayed hash rejected (15.380631ms)
+✔ 10 CRM version drift rejects approval and application (20.687803ms)
+✔ 10 altered diff after approval cannot write (16.17493ms)
+✔ 11 concurrent applies and retries produce one audit and one version increment (27.824137ms)
+✔ 11 precommit failure rolls back write and audit then resumes (19.578468ms)
+✔ 12 injected authorization text never grants approval (11.248783ms)
+✔ 12 ungrounded or arbitrary model fields rejected {"candidates":[{"field":"admin","value":true,"speaker":"Amina","quote":"budget is $10,000 USD."}],"contacts":[],"flags":[]} (8.609147ms)
+✔ 12 ungrounded or arbitrary model fields rejected {"candidates":[{"field":"budgetMinor","value":9000000,"speaker":"Amina","quote":"budget is $10,000 USD. close date: 2026-02-15."}],"contacts":[],"flags":[]} (10.780416ms)
+✔ 12 ungrounded or arbitrary model fields rejected {"candidates":[],"contacts":["Invented Person"],"flags":[]} (9.575256ms)
+✔ 12 fabricated speaker attribution rejected (8.657711ms)
+✔ 13 provider timeout creates no writable proposal (10.034549ms)
+✔ 13 invalid dates timezone and empty or oversized transcript rejected (4.846688ms)
+✔ unit chunking retains source tail and valid exact dates (5.632033ms)
+✔ 02 conflicts inside a single utterance stay separate (12.700394ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2090.635173

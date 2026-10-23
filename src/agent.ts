@@ -1,5 +1,6 @@
 import {createHash} from 'node:crypto';import type {Database} from './db.js';import {chunks,validateExtraction,type Provider,type Context,type Extraction} from './extraction.js';
-const hash=(v:unknown)=>createHash('sha256').update(JSON.stringify(v)).digest('hex');
+function canonical(v:unknown):unknown{if(Array.isArray(v))return v.map(canonical);if(v&&typeof v==='object')return Object.fromEntries(Object.entries(v).sort(([a],[b])=>a.localeCompare(b)).map(([k,x])=>[k,canonical(x)]));return v;}
+const hash=(v:unknown)=>createHash('sha256').update(JSON.stringify(canonical(v))).digest('hex');
 export interface Call{id:string;deal:string;transcript:string;occurredAt:string;timezone:string}
 export type Diff=Record<string,{before:unknown;after:unknown}>;
 export class CRMCallAgent{
@@ -14,9 +15,12 @@ export class CRMCallAgent{
  const prior=await this.db.query('SELECT * FROM proposals WHERE id=$1',[callId]);if(prior.length)return prior[0]!;
  const context:Context={occurredAt:new Date(call.occurred_at).toISOString(),timezone:call.timezone,company:deal.company};const extraction:Extraction={candidates:[],contacts:[],flags:[]};
  for(const chunk of chunks(call.transcript)){const part=validateExtraction(await this.provider.extract(chunk,context),call.transcript,context);extraction.candidates.push(...part.candidates);extraction.contacts.push(...part.contacts);extraction.flags.push(...part.flags);}
- extraction.candidates=Array.from(new Map(extraction.candidates.map(e=>[JSON.stringify(e),e])).values());extraction.contacts=[...new Set(extraction.contacts)].sort();
+ // Overlap fragments referring to the same source marker are one statement.
+ const byOccurrence=new Map<string,typeof extraction.candidates[number]>();
+ for(const e of extraction.candidates){const marker=e.field==='budgetMinor'?/(?:budget|بجٹ)/i:e.field==='closeDate'?/close date/i:/(?:next step|اگلا قدم)/i;const pos=e.quote.search(marker);const start=call.transcript.indexOf(e.quote);const key=[e.field,e.speaker,start+pos].join(':');const prior=byOccurrence.get(key);if(!prior||e.quote.length-pos>prior.quote.length-prior.quote.search(marker))byOccurrence.set(key,e);}
+ extraction.candidates=[...byOccurrence.values()];extraction.contacts=[...new Set(extraction.contacts)].sort();
  const fields:Record<string,unknown>={};for(const field of ['budgetMinor','closeDate','nextStep','nextStepDate'] as const){const candidates=extraction.candidates.filter(e=>e.field===field);const values=[...new Set(candidates.map(e=>e.value))];if(values.length===1)fields[field]=values[0];else if(values.length>1)extraction.flags.push('conflict:'+field);}
- if(!fields.nextStep)extraction.flags.push('no-next-step');if(extraction.contacts.length)fields.contacts=[...new Set([...(Array.isArray(deal.fields.contacts)?deal.fields.contacts:[]),...extraction.contacts])].sort();
+ if(!fields.nextStep){delete fields.nextStepDate;extraction.flags.push('no-next-step');}if(extraction.contacts.length)fields.contacts=[...new Set([...(Array.isArray(deal.fields.contacts)?deal.fields.contacts:[]),...extraction.contacts])].sort();
  const diff:Diff={};for(const [field,value] of Object.entries(fields)){const before=deal.fields[field]??null;if(JSON.stringify(before)!==JSON.stringify(value)){diff[field]={before,after:value};if(before!==null&&field!=='contacts')extraction.flags.push('crm-contradiction:'+field);}}
  extraction.flags=[...new Set(extraction.flags)].sort();
  const followup=await this.provider.followup(fields,extraction.flags);if(!followup.trim()||followup.length>15000)throw new Error('Invalid followup draft');const diffHash=hash([callId,deal.version,diff]);

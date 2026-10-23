@@ -1,0 +1,40 @@
+# Recorded demo output
+
+All data synthetic. Actual command: `TEST_PGLITE=1 npm run demo`. Embedded PostgreSQL, not Docker.
+
+```text
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> buildzn-sales-call-to-crm-sync@0.1.0 demo
+> node --import tsx src/demo.ts
+
+All data synthetic. No external CRM writes or messages.
+Review diff: {
+  "contacts": {
+    "after": [
+      "Amina",
+      "Bilal"
+    ],
+    "before": []
+  },
+  "nextStep": {
+    "after": "send proposal next week",
+    "before": null
+  },
+  "budgetMinor": {
+    "after": 1000000,
+    "before": 500000
+  },
+  "nextStepDate": {
+    "after": "2026-01-26",
+    "before": null
+  }
+}
+Flags: [ 'crm-contradiction:budgetMinor', 'vague-next-week:2026-01-26' ]
+Follow-up draft: Synthetic follow-up draft. Proposed next step: send proposal next week. Review flags: crm-contradiction:budgetMinor, vague-next-week:2026-01-26.
+Before approval CRM version: 1
+Dry run: dry-run
+Explicitly approved apply: applied
+Retry: already-applied
+Audit records: 1
+```
