@@ -7,3 +7,7 @@ Results: TypeScript passed; 30 tests passed, 0 failed/skipped. Fixed long-uttera
 Running: none at checkpoint.
 
 Next: publish new repo and run native PostgreSQL Actions plus clean-clone Docker demo. Repository creation/auth and Docker remain blocked. See docs/BLOCKERS.md. No deployment. Portfolio site edits and PR must wait for the project gates; no existing repository changed.
+
+Fresh local git clone verified: npm ci, formatting, TypeScript, embedded PostgreSQL tests and demo passed. Working tree remained clean. Evidence: docs/clean-clone-output.txt. Native Docker and GitHub Actions gates remain unverified.
+
+Final conflict review preserves detectable source candidates even if a model omits them. Test count is 30.
